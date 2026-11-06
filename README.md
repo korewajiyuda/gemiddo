@@ -4,20 +4,10 @@
 
 ---
 
-## 구글 시트 실시간 연동 방법 (1분 컷)
+## 구글 시트 실시간 연동 정보 (연동 완료)
 
-인스타그램(`@please_gemini`)으로 학생에게 DM이 왔을 때 **누가 언제 몇 등으로 무슨 상품에 당첨되었는지** 구글 시트에서 실시간으로 대조할 수 있습니다.
-
-1. 새 **구글 스프레드시트(Google Sheets)**를 생성합니다.
-2. 상단 메뉴에서 **[확장 프로그램] > [Apps Script]**를 클릭합니다.
-3. 기본 코드를 지우고 이 폴더의 [`google-apps-script.js`](./google-apps-script.js) 파일 내용을 전체 복사해 붙여넣은 뒤 저장(`Cmd + S` 또는 `Ctrl + S`)합니다.
-4. 우측 상단 **[배포] > [새 배포]** 클릭 -> 유형 선택(톱니바퀴)에서 **[웹 앱]** 선택:
-   - **다음 사용자 인증 정보로 실행**: `나`
-   - **액세스 권한이 있는 사용자**: `모든 사용자` *(필수)*
-5. **[배포]** 클릭 및 권한 승인 후 생성된 **웹 앱 URL**(`https://script.google.com/macros/s/.../exec`)을 복사합니다.
-6. 복사한 URL을 아래 두 곳 중 편한 곳에 넣으면 즉시 연동됩니다:
-   - **방법 A (코드에 고정)**: `index.html` 하단의 `const DEFAULT_GOOGLE_SHEET_WEB_APP_URL = '여기에_URL_붙여넣기';`에 입력 후 GitHub에 푸시
-   - **방법 B (화면에서 입력)**: 웹페이지 하단 운영진 패널의 `Google Apps Script 웹 앱 URL 붙여넣기` 입력창에 넣고 **[URL 저장]** 클릭
+- **실시간 당첨자 명단 구글 시트**: [https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?usp=sharing)
+- **Apps Script 웹 앱 엔드포인트**: `https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec` (`index.html`에 기본 내장됨)
 
 ---
 

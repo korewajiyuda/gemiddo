@@ -504,27 +504,30 @@
           <div class="flex items-center justify-between">
             <span class="font-bold text-cream/90">구글 시트 연동 상태</span>
             <span id="sheetSyncStatusText" class="text-[10px] font-extrabold text-star">
-              대기 중 (복권 긁을 때 자동 기록)
+              ✓ 실시간 구글 시트 연동됨
             </span>
           </div>
-          <div class="flex gap-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <a
+              href="https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full py-2 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-cream font-extrabold text-xs text-center flex items-center justify-center gap-1.5 transition"
+            >
+              <span>실시간 당첨자 구글 시트 열기</span>
+              <span>▸</span>
+            </a>
+          </div>
+          <div class="hidden">
             <input
               id="sheetWebAppUrlInput"
               type="url"
-              placeholder="Google Apps Script 웹 앱 URL 붙여넣기"
-              class="flex-1 px-2.5 py-1.5 rounded-lg bg-choco-deep text-cream text-[11px] border border-white/20 placeholder:text-cream/40 focus:outline-none select-text"
+              value="https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec"
             />
-            <button
-              type="button"
-              onclick="saveSheetWebAppUrl()"
-              class="px-3 py-1.5 rounded-lg bg-pinky-deep text-white text-[11px] font-extrabold flex-shrink-0"
-            >
-              URL 저장
-            </button>
           </div>
           <!-- 브라우저 내 최근 참여/당첨 로그 미리보기 -->
           <div id="localRecordPreview" class="bg-choco-deep/70 rounded-xl p-2.5 text-[10px] text-cream/85 space-y-1 max-h-28 overflow-y-auto">
-            <p class="text-cream/50">복권을 긁으면 여기에 [순번 / 이름 / 학교계정 / 당첨상품]이 실시간으로 표시되고 구글 시트로 전송됩니다.</p>
+            <p class="text-cream/50">복권을 긁으면 여기에 [순번 / 이름 / 학교계정 / 당첨상품]이 실시간으로 표시되고 구글 시트로 자동 전송됩니다.</p>
           </div>
         </div>
       </section>
@@ -654,7 +657,7 @@
      * 아래 DEFAULT_GOOGLE_SHEET_WEB_APP_URL에 넣거나, 화면 하단 입력칸에 붙여넣으시면
      * 학생이 복권을 긁는 즉시 구글 시트에 [순번 / 일시 / 이름 / 학교계정 / 당첨등수 / 당첨상품명]이 자동 기록됩니다!
      */
-    const DEFAULT_GOOGLE_SHEET_WEB_APP_URL = '';
+    const DEFAULT_GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec';
 
     const TOTAL_STOCK = 200;
     // 1등(배달의민족 10만원권): 25번째, 92번째 참가자 고정
@@ -714,7 +717,7 @@
     let currentTurn = getInitialTurn();
     let loggedInUserName = localStorage.getItem('gemitto_user_name') || '';
     let loggedInSchoolEmail = localStorage.getItem('gemitto_school_email') || '';
-    let sheetWebAppUrl = localStorage.getItem('gemitto_sheet_url') || DEFAULT_GOOGLE_SHEET_WEB_APP_URL;
+    let sheetWebAppUrl = DEFAULT_GOOGLE_SHEET_WEB_APP_URL;
     let isRevealed = false;
     let isDrawing = false;
 

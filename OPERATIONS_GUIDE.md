@@ -6,9 +6,11 @@
 
 ## 0. 운영진 필수 링크 모음
 
+- **실시간 당첨자 확인 구글 시트 링크**:
+  [https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?usp=sharing)
+- **구글 시트 연동 웹 앱 URL (index.html 내장 완료)**:
+  `https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec`
 - **프로모션 웹사이트 링크**: `[여기에 GitHub Pages 배포 주소 입력]`
-- **실시간 당첨자 확인 구글 시트 링크**: `[여기에 생성한 구글 시트 공유 링크 입력]`
-  *(아직 시트를 만들기 전이라면 [https://sheets.new](https://sheets.new) 접속 후 아래 4번 가이드대로 1분 만에 생성 가능)*
 - **인스타그램 DM 검수 계정**: `@please_gemini` ([https://www.instagram.com/please_gemini/](https://www.instagram.com/please_gemini/))
 - **학생 안내용 Google AI Plan 무료 가입 링크 (UTM)**:
   [https://gemini.google/students/?utm_source=student&utm_medium=social&utm_campaign=microsite_campus_kyunghee-ambassador](https://gemini.google/students/?utm_source=student&utm_medium=social&utm_campaign=microsite_campus_kyunghee-ambassador)
