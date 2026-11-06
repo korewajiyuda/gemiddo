@@ -460,73 +460,80 @@
         </p>
       </section>
 
-      <!-- 6. 하단: 운영진 테스트 화면 + 운영진 코드(2026gsakhu) 입력 시에만 열리는 비밀 기록창 -->
-      <section aria-label="운영진 테스트" class="bg-choco rounded-2xl p-4 text-cream space-y-3 shadow-sm">
-        <div class="flex items-center justify-between">
-          <span class="text-[11px] font-extrabold text-pinky-soft uppercase">
-            운영진 테스트 화면
-          </span>
-          <span id="currentSimTurnLabel" class="text-[11px] font-bold text-star">
-            현재: #001 (3등 츄파춥스 막대사탕 기프티콘)
-          </span>
-        </div>
-
-        <!-- 순번 테스트 버튼 (누르면 해당 순번으로 세팅되고 이름/학교계정 입력창부터 다시 시작) -->
-        <div class="grid grid-cols-4 gap-1.5">
-          <button type="button" onclick="quickTestTurn(25)" class="py-2 px-2 rounded-xl bg-pinky-deep text-white text-[11px] font-extrabold active:scale-95 transition">
-            #25 (1등 배민)
-          </button>
-          <button type="button" onclick="quickTestTurn(92)" class="py-2 px-2 rounded-xl bg-pinky-deep text-white text-[11px] font-extrabold active:scale-95 transition">
-            #92 (1등 배민)
-          </button>
-          <button type="button" onclick="quickTestTurn(12)" class="py-2 px-2 rounded-xl bg-white/20 text-white text-[11px] font-bold active:scale-95 transition">
-            #12 (2등 빼빼로)
-          </button>
-          <button type="button" onclick="quickTestTurn(1)" class="py-2 px-2 rounded-xl bg-white/20 text-white text-[11px] font-bold active:scale-95 transition">
-            #01 (3등 사탕)
-          </button>
-        </div>
-
-        <!-- 운영진 코드(2026gsakhu) 입력 전 잠금 영역 -->
-        <div class="pt-2 border-t border-white/15 space-y-2 text-[11px]">
-          <div id="adminCodeLockBox" class="flex gap-1.5">
+      <!-- 6. 하단: 운영진 코드(2026gsakhu)를 입력해야만 전체 운영진 테스트 & 기록 박스가 열림 -->
+      <section aria-label="운영진 전용 영역" class="pt-2">
+        <!-- 코드 입력 전: 작고 깔끔한 운영진 인증 바만 표시 (학생들에게는 내부 버튼/순번/시트 전혀 노출 안 됨) -->
+        <div id="adminCodeLockBox" class="flex items-center justify-between gap-2 px-4 py-3 rounded-2xl bg-white/70 border border-choco/10">
+          <span class="text-[11px] font-bold text-choco-muted flex-shrink-0">운영진 전용</span>
+          <div class="flex items-center gap-1.5 flex-1 max-w-[240px]">
             <input
               id="adminCodeInput"
               type="password"
-              placeholder="운영진 코드 입력 (당첨 기록 열람)"
-              class="flex-1 px-3 py-1.5 rounded-lg bg-choco-deep text-cream text-[11px] border border-white/20 placeholder:text-cream/40 focus:outline-none select-text"
+              placeholder="운영진 코드 입력"
+              class="w-full px-3 py-1.5 rounded-xl bg-cream text-choco text-xs font-bold border border-choco/15 placeholder:text-choco-muted/50 focus:outline-none focus:border-pinky-deep select-text"
               onkeydown="if(event.key==='Enter'){unlockAdminRecords();}"
             />
             <button
               type="button"
               onclick="unlockAdminRecords()"
-              class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-cream text-[11px] font-extrabold flex-shrink-0"
+              class="px-3 py-1.5 rounded-xl bg-choco text-white text-xs font-extrabold flex-shrink-0"
             >
               확인
             </button>
           </div>
+        </div>
 
-          <!-- 운영진 코드(2026gsakhu) 일치 시에만 열리는 당첨 기록 & 시트 관리창 -->
-          <div id="adminSecretRecordsPanel" class="hidden space-y-2 pt-1">
+        <!-- 2026gsakhu 입력 성공 시에만 나타나는 전체 다크브라운 운영진 박스 -->
+        <div id="adminSecretRecordsPanel" class="hidden bg-choco rounded-2xl p-4 text-cream space-y-3 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold text-pinky-soft uppercase">
+              운영진 테스트 & 구글 시트 실시간 기록
+            </span>
+            <span id="currentSimTurnLabel" class="text-[11px] font-bold text-star">
+              현재: #001 (3등 츄파춥스 막대사탕 기프티콘)
+            </span>
+          </div>
+
+          <!-- 순번 테스트 버튼 -->
+          <div class="grid grid-cols-4 gap-1.5">
+            <button type="button" onclick="quickTestTurn(25)" class="py-2 px-2 rounded-xl bg-pinky-deep text-white text-[11px] font-extrabold active:scale-95 transition">
+              #25 (1등 배민)
+            </button>
+            <button type="button" onclick="quickTestTurn(92)" class="py-2 px-2 rounded-xl bg-pinky-deep text-white text-[11px] font-extrabold active:scale-95 transition">
+              #92 (1등 배민)
+            </button>
+            <button type="button" onclick="quickTestTurn(12)" class="py-2 px-2 rounded-xl bg-white/20 text-white text-[11px] font-bold active:scale-95 transition">
+              #12 (2등 빼빼로)
+            </button>
+            <button type="button" onclick="quickTestTurn(1)" class="py-2 px-2 rounded-xl bg-white/20 text-white text-[11px] font-bold active:scale-95 transition">
+              #01 (3등 사탕)
+            </button>
+          </div>
+
+          <!-- 구글 시트 연동 상태 & 시트 열기 & 리셋 -->
+          <div class="pt-2 border-t border-white/15 space-y-2 text-[11px]">
             <div class="flex items-center justify-between">
-              <span class="font-bold text-star text-[11px]">✓ 운영진 전용 당첨 기록</span>
-              <div class="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onclick="resetAllEventData()"
-                  class="px-2 py-1 rounded bg-red-500/80 hover:bg-red-500 text-white text-[10px] font-extrabold"
-                >
-                  수량 200개 & 기록 리셋
-                </button>
-                <a
-                  href="https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?gid=0#gid=0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="px-2.5 py-1 rounded bg-pinky-deep text-white text-[10px] font-extrabold"
-                >
-                  구글 시트 열기 ▸
-                </a>
-              </div>
+              <span class="font-bold text-cream/90">구글 시트 연동 상태</span>
+              <span class="text-[10px] font-extrabold text-star">✓ 실시간 구글 시트 연동됨</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <a
+                href="https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?gid=0#gid=0"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="py-2 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-cream font-extrabold text-xs text-center flex items-center justify-center gap-1 transition"
+              >
+                <span>실시간 구글 시트 열기</span>
+                <span>▸</span>
+              </a>
+              <button
+                type="button"
+                onclick="resetAllEventData()"
+                class="py-2 px-3 rounded-xl bg-red-500/80 hover:bg-red-500 text-white font-extrabold text-xs text-center transition"
+              >
+                수량 200개 & 기록 리셋
+              </button>
             </div>
 
             <div id="localRecordPreview" class="bg-choco-deep/70 rounded-xl p-2.5 text-[10px] text-cream/85 space-y-1 max-h-36 overflow-y-auto">
