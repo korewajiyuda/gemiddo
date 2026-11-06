@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>GEMITTO (제미또) - 행운의 경품 도감 & 스크래치 가챠</title>
+  <title>GEMITTO (제미또) - 11/11 행운의 경품 도감 & 100% 당첨 스크래치</title>
   <!-- Pretendard Web Font CDN -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Tailwind CSS CDN -->
@@ -17,23 +17,25 @@
           },
           colors: {
             gemini: {
-              bg: '#F3F5FF',
+              bg: '#F0F3FF',
               surface: '#FFFFFF',
               blue: '#4285F4',
               violet: '#9B72CB',
               pink: '#D96570',
               hotpink: '#FF4D94',
               navy: '#1B1F3B',
-              navyLight: '#2D335A',
+              navyLight: '#282E52',
               slate: '#5E6488',
-              star: '#FFD43B'
+              star: '#FFD43B',
+              mint: '#10B981'
             }
           },
           boxShadow: {
             'game-card': '0 8px 0px #1B1F3B, 0 16px 32px rgba(27, 31, 59, 0.18)',
             'game-sm': '0 4px 0px #1B1F3B',
+            'game-btn': '0 5px 0px #1B1F3B',
             'game-btn-disabled': '0 5px 0px #9CA3AF',
-            'aurora': '0 12px 36px -4px rgba(155, 114, 203, 0.30), 0 4px 16px -2px rgba(66, 133, 244, 0.20)',
+            'aurora': '0 12px 36px -4px rgba(155, 114, 203, 0.35), 0 4px 16px -2px rgba(66, 133, 244, 0.25)',
           }
         }
       }
@@ -42,18 +44,20 @@
   <style>
     body {
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      background-color: #E4E8FA;
+      background-color: #DCE2F9;
       color: #1B1F3B;
       -webkit-font-smoothing: antialiased;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    /* 레퍼런스 스타일의 도트(Halftone) + 제미나이 오로라 배경 */
+    /* 레퍼런스 도감 스타일의 도트(Halftone) + 제미나이 오로라 배경 */
     .gemini-game-bg {
       background-color: #F0F3FF;
       background-image:
-        radial-gradient(circle at 15% 12%, rgba(66, 133, 244, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 88% 20%, rgba(217, 101, 112, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 50% 60%, rgba(155, 114, 203, 0.20) 0%, transparent 50%),
+        radial-gradient(circle at 12% 10%, rgba(66, 133, 244, 0.24) 0%, transparent 42%),
+        radial-gradient(circle at 88% 18%, rgba(217, 101, 112, 0.24) 0%, transparent 42%),
+        radial-gradient(circle at 50% 55%, rgba(155, 114, 203, 0.20) 0%, transparent 48%),
         radial-gradient(rgba(155, 114, 203, 0.22) 1.5px, transparent 1.5px);
       background-size: 100% 100%, 100% 100%, 100% 100%, 16px 16px;
     }
@@ -63,19 +67,23 @@
       background: linear-gradient(135deg, #4285F4 0%, #9B72CB 52%, #D96570 100%);
     }
 
+    .bg-gemini-aurora-soft {
+      background: linear-gradient(135deg, rgba(66,133,244,0.12) 0%, rgba(155,114,203,0.14) 52%, rgba(217,101,112,0.12) 100%);
+    }
+
     .text-gemini-aurora {
       background: linear-gradient(135deg, #4285F4 0%, #9B72CB 52%, #D96570 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    /* 레퍼런스 카드 내부의 대각선 스트라이프 패턴 */
+    /* 레퍼런스 도감 카드 내부의 대각선 스트라이프 패턴 */
     .card-stripe-bg {
       background-color: #F8FAFF;
       background-image: repeating-linear-gradient(
         -45deg,
-        rgba(66, 133, 244, 0.06),
-        rgba(66, 133, 244, 0.06) 8px,
+        rgba(66, 133, 244, 0.07),
+        rgba(66, 133, 244, 0.07) 8px,
         rgba(155, 114, 203, 0.03) 8px,
         rgba(155, 114, 203, 0.03) 16px
       );
@@ -90,150 +98,216 @@
     .dex-frame-inner {
       border: 1.5px dashed rgba(255, 255, 255, 0.35);
     }
+
+    /* 스크래치 캔버스 터치 스크롤 방지 */
+    #scratchCanvas {
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    /* 당첨 공개 애니메이션 */
+    @keyframes popScale {
+      0% { transform: scale(0.92); opacity: 0.5; }
+      60% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popScale 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 5px 0px #1B1F3B, 0 0 0 0 rgba(155, 114, 203, 0.6); }
+      50% { box-shadow: 0 5px 0px #1B1F3B, 0 0 0 10px rgba(155, 114, 203, 0); }
+    }
+    .btn-pulse-active {
+      animation: pulseGlow 2s infinite;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-gemini-violet selection:text-white">
 
   <!-- 모바일 뷰포트 컨테이너 (max-width: 480px, margin: 0 auto, min-height: 100vh) -->
-  <main class="max-w-[480px] mx-auto min-h-screen gemini-game-bg relative flex flex-col justify-between pb-32 shadow-2xl overflow-x-hidden border-x border-gemini-navy/10">
+  <main class="max-w-[480px] mx-auto min-h-screen gemini-game-bg relative flex flex-col justify-between pb-36 shadow-2xl overflow-x-hidden border-x border-gemini-navy/10">
 
-    <!-- 1. 상단 플로팅 게임 HUD 뱃지 (Sticky) -->
+    <!-- 1. 상단 플로팅 게임 HUD 뱃지 (Sticky - 실시간 남은 수량 & 참가 순번) -->
     <div class="sticky top-3 z-30 px-4 pt-2 pointer-events-none flex justify-center">
-      <div class="pointer-events-auto w-full max-w-[420px] flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-gemini-navy/95 backdrop-blur-md shadow-game-sm border-2 border-white/20 text-white">
-        <!-- LIVE 상태 표시 -->
-        <div class="flex items-center gap-2">
-          <span class="relative flex h-2.5 w-2.5">
+      <div class="pointer-events-auto w-full max-w-[430px] flex items-center justify-between gap-2.5 px-4 py-2.5 rounded-2xl bg-gemini-navy/95 backdrop-blur-md shadow-game-sm border-2 border-white/20 text-white">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="relative flex h-2.5 w-2.5 flex-shrink-0">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gemini-pink opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gemini-Gradient bg-gemini-pink"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gemini-pink"></span>
           </span>
-          <span class="px-2 py-0.5 rounded bg-gemini-aurora text-[10px] font-black tracking-wider uppercase">
+          <span class="px-2 py-0.5 rounded bg-gemini-aurora text-[10px] font-black tracking-wider uppercase flex-shrink-0">
             LIVE
           </span>
-          <span class="text-xs font-bold tracking-tight text-white/90">
-            실시간 남은 수량: <strong class="text-gemini-star font-black">200개</strong>
+          <span class="text-xs font-bold tracking-tight text-white/95 truncate">
+            실시간 남은 수량: <strong id="remainCountText" class="text-gemini-star font-black">200개</strong>
           </span>
         </div>
-        <!-- 미니 HP/수량 게이지 바 -->
-        <div class="w-20 h-2.5 bg-white/15 rounded-full overflow-hidden p-0.5 border border-white/20">
-          <div class="h-full w-full rounded-full bg-gemini-aurora"></div>
+        <!-- HP 스타일 수량 게이지 바 -->
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <span id="turnBadgeText" class="text-[10px] font-extrabold text-white/70 bg-white/10 px-2 py-0.5 rounded-md">
+            NO.001
+          </span>
+          <div class="w-16 h-2.5 bg-white/15 rounded-full overflow-hidden p-0.5 border border-white/20">
+            <div id="remainGaugeBar" class="h-full w-full rounded-full bg-gemini-aurora transition-all duration-500"></div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- 메인 컨텐츠 래퍼 -->
-    <div class="px-5 pt-5 space-y-7 flex-1 relative">
+    <div class="px-5 pt-4 space-y-6 flex-1 relative">
 
-      <!-- 배경 장식용 픽셀/제미나이 스파클 SVG (순수 그래픽, 이모지 없음) -->
-      <svg class="w-6 h-6 text-gemini-blue/60 absolute top-6 left-6 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+      <!-- 배경 장식용 제미나이 스파클 & 픽셀 십자 SVG (이모지 미사용) -->
+      <svg class="w-6 h-6 text-gemini-blue/50 absolute top-4 left-5 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
       </svg>
-      <svg class="w-5 h-5 text-gemini-pink/70 absolute top-28 right-6 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
+      <svg class="w-5 h-5 text-gemini-pink/60 absolute top-24 right-5 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
         <path d="M11 2h2v7h7v2h-7v7h-2v-7H4V9h7V2z"/>
       </svg>
 
-      <!-- 2. 헤더 타이틀 & 메인 키비주얼 영역 (레퍼런스의 상단 타이틀 + 캐릭터/오브제 구성) -->
-      <section aria-label="프로모션 헤더 영역" class="space-y-4 pt-1">
-        <!-- 상단 콜라보 워드마크 라인 -->
-        <div class="flex items-center justify-center gap-2 text-xs font-black tracking-widest text-gemini-navy/80 uppercase">
+      <!-- 2. 헤더 타이틀 & 메인 키비주얼 영역 -->
+      <section aria-label="프로모션 헤더 영역" class="space-y-3.5 pt-1">
+        <!-- 상단 콜라보 워드마크 -->
+        <div class="flex items-center justify-center gap-2 text-[11px] font-black tracking-widest text-gemini-navy/80 uppercase">
           <span>GOOGLE GEMINI</span>
           <span class="text-gemini-violet">×</span>
           <span>JEMITTO 11.11</span>
         </div>
 
-        <!-- [ASSET 01] 게임 타이틀 로고 이미지 Placeholder -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-3 border-2 border-dashed border-gemini-violet/50 shadow-sm">
-          <div class="bg-gray-200/90 rounded-xl py-5 px-4 flex flex-col items-center justify-center text-center gap-1 border border-gray-300">
-            <span class="px-2 py-0.5 rounded bg-gemini-navy text-white text-[10px] font-bold">Custom Asset 01 · 타이틀 로고</span>
-            <p class="text-sm font-extrabold text-gemini-navy mt-1">제미또 타이틀 로고 이미지 (투명 PNG 권장)</p>
-            <p class="text-[11px] text-gemini-slate">예: [아이콘] 제미또의 행운 도감 / 100% 당첨 가챠 (비율 약 3:1)</p>
+        <!-- [Custom Asset 01] 타이틀 로고 영역 (교체 가능) -->
+        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-3 border-2 border-gemini-navy shadow-game-sm text-center space-y-1">
+          <!-- 나중에 로고 PNG로 교체할 경우 아래 div를 <img src="./assets/my-logo.png" class="mx-auto h-14 object-contain" /> 로 교체하세요 -->
+          <div class="bg-gray-200/80 rounded-xl py-3 px-4 flex flex-col items-center justify-center border border-dashed border-gemini-violet/50">
+            <span class="text-[10px] font-black text-gemini-violet uppercase tracking-wider">Custom Asset 01 · Title Logo</span>
+            <h1 class="text-xl font-black text-gemini-navy tracking-tight mt-0.5">
+              제미또의 <span class="text-gemini-aurora">100% 당첨</span> 행운 도감
+            </h1>
+            <p class="text-[11px] font-semibold text-gemini-slate">
+              누구나 먼저 긁고 당첨 확인 후 · Google AI Plan 무료 인증으로 즉시 수령!
+            </p>
           </div>
         </div>
 
-        <!-- [ASSET 02] 메인 히어로 배너 / 캐릭터·오브제 이미지 Placeholder (4:3 비율) -->
+        <!-- [Custom Asset 02] 메인 배너 Placeholder (4:3 비율, 나중에 교체 용이) -->
         <div class="p-2 bg-gemini-navy rounded-3xl shadow-game-card">
           <div class="dex-frame-inner rounded-2xl p-2 bg-gemini-navyLight">
-            <div class="bg-gray-200 rounded-xl aspect-[4/3] w-full flex flex-col items-center justify-center gap-1.5 text-center px-4 relative overflow-hidden">
+            <div class="bg-gray-200 rounded-xl aspect-[16/9] w-full flex flex-col items-center justify-center gap-1 text-center px-4 relative overflow-hidden">
               <span class="px-2.5 py-0.5 rounded-full bg-gemini-aurora text-white text-[10px] font-extrabold">
-                Custom Asset 02 · 메인 키비주얼 (4:3)
+                Custom Asset 02 · Main Hero Image (16:9 or 4:3)
               </span>
-              <span class="text-sm font-extrabold text-gray-700">Custom Asset (Main Hero Visual)</span>
+              <span class="text-xs font-extrabold text-gray-700 mt-0.5">메인 프로모션 배너 / 캐릭터 이미지 자리</span>
               <span class="text-[11px] text-gray-500">
-                마스코트/인물 누끼 또는 제미나이×빼빼로데이 메인 배너 이미지
+                선착순 200명 한정 · 11/11 (월) 10:00 ~ 22:00 운영
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 3. 메인 스크래치 도감 카드 영역 (레퍼런스의 SSR 도감 카드 레이아웃 완벽 반영) -->
-      <section aria-label="메인 스크래치 도감 카드 영역">
+      <!-- 3. 메인 스크래치 도감 카드 영역 (접속 즉시 긁기 가능!) -->
+      <section id="scratchSection" aria-label="메인 스크래치 도감 카드 영역">
         <div class="dex-frame rounded-3xl p-2.5 shadow-game-card">
           <div class="dex-frame-inner rounded-2xl p-4 bg-gemini-navy space-y-4">
 
-            <!-- 도감 카드 상단 헤더 (속성 뱃지 + 타이틀 리본 + SSR 등급) -->
+            <!-- 도감 카드 상단 헤더 -->
             <div class="flex items-center justify-between gap-2 bg-white rounded-2xl px-3.5 py-2.5 border-2 border-gemini-navy shadow-sm">
               <div class="flex items-center gap-2.5 min-w-0">
-                <!-- 좌측 픽셀/아이템 미니 아이콘 슬롯 -->
                 <div class="w-10 h-10 rounded-xl bg-gemini-aurora p-0.5 flex-shrink-0">
                   <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center text-[10px] font-black text-gemini-violet">
-                    ICON
+                    STEP 1
                   </div>
                 </div>
                 <div class="min-w-0">
-                  <span class="block text-[10px] font-extrabold text-gemini-violet uppercase tracking-wider">
-                    LUCKY GACHA TICKET
+                  <span id="cardStatusSub" class="block text-[10px] font-extrabold text-gemini-violet uppercase tracking-wider">
+                    SCRATCH NOW · 100% WIN
                   </span>
-                  <h2 class="text-base font-black text-gemini-navy tracking-tight truncate">
-                    꽝 없는 제미또 스크래치
+                  <h2 id="cardStatusTitle" class="text-base font-black text-gemini-navy tracking-tight truncate">
+                    지금 바로 복권을 긁어보세요!
                   </h2>
                 </div>
               </div>
-              <!-- 우측 SSR 등급 마크 -->
-              <span class="px-2.5 py-1 rounded-lg bg-gemini-aurora text-white text-xs font-black italic tracking-wider shadow-sm flex-shrink-0">
-                SSR
+              <!-- 등급 뱃지 (긁기 전 ??? -> 긁은 후 SSR / SR / R) -->
+              <span id="cardRarityBadge" class="px-3 py-1 rounded-lg bg-gemini-aurora text-white text-xs font-black italic tracking-wider shadow-sm flex-shrink-0">
+                ??? 등급
               </span>
             </div>
 
-            <!-- [ASSET 03] 1:1 스크래치 복권 덮개 영역 (대각선 스트라이프 프레임 내부) -->
+            <!-- 1:1 스크래치 복권 캔버스 & 뒷면 당첨 결과 영역 -->
             <div class="card-stripe-bg rounded-2xl p-3 border-2 border-gemini-navy relative">
-              <!-- 1:1 비율 스크래치 덮개 이미지 Placeholder -->
-              <div class="bg-gray-200 rounded-xl aspect-square w-full flex flex-col items-center justify-center gap-2 text-center p-4 border-2 border-dashed border-gemini-blue/50 relative overflow-hidden">
-                <span class="px-2.5 py-0.5 rounded-full bg-gemini-navy text-white text-[10px] font-bold">
-                  Custom Asset 03 · 스크래치 덮개 (1:1)
-                </span>
-                <span class="text-sm font-extrabold text-gray-700">Custom Asset (Scratch Cover 1:1)</span>
-                <span class="text-xs text-gray-500 leading-relaxed">
-                  사용자가 긁을 스크래치 커버 이미지 (800×800px 권장)<br />
-                  + 뒷면에 깔릴 당첨 결과 이미지 (1등/2등/3등)
-                </span>
+
+              <!-- 1:1 정사각형 컨테이너 -->
+              <div id="scratchContainer" class="relative rounded-xl aspect-square w-full overflow-hidden border-2 border-gemini-navy bg-white shadow-inner select-none">
+
+                <!-- [뒷면 레이어] 스크래치를 긁으면 드러나는 당첨 상품 화면 -->
+                <div id="prizeRevealCard" class="absolute inset-0 flex flex-col items-center justify-between p-5 text-center bg-gradient-to-b from-white via-[#F5F7FF] to-[#EDE9FE]">
+                  <!-- 상단 당첨 뱃지 & 참가 순번 -->
+                  <div class="w-full flex items-center justify-between">
+                    <span id="prizeTierPill" class="px-3 py-1 rounded-full bg-gemini-aurora text-white text-xs font-black italic tracking-wider shadow-sm">
+                      SSR · 1등 당첨
+                    </span>
+                    <span id="prizeTicketNumber" class="px-2.5 py-1 rounded-lg bg-gemini-navy text-gemini-star text-[11px] font-black">
+                      접수번호 #025
+                    </span>
+                  </div>
+
+                  <!-- 중앙 당첨 상품 이미지 Placeholder (Custom Asset 교체 가능) -->
+                  <div class="my-auto flex flex-col items-center justify-center w-full space-y-2.5">
+                    <div id="prizeImageSlot" class="w-36 h-36 rounded-2xl bg-gray-200 border-2 border-gemini-navy shadow-game-sm flex flex-col items-center justify-center p-2 overflow-hidden relative">
+                      <img id="prizeImageEl" src="./assets/prize-2-pepero.png" alt="당첨 경품 이미지" class="w-full h-full object-cover rounded-xl" onerror="this.style.display='none'" />
+                      <span id="prizeAssetLabel" class="absolute bottom-1.5 px-2 py-0.5 rounded bg-gemini-navy/85 text-white text-[9px] font-bold">
+                        Custom Prize Asset
+                      </span>
+                    </div>
+
+                    <div class="space-y-1">
+                      <p id="prizeSubCopy" class="text-xs font-extrabold text-gemini-violet">
+                        축하합니다! 100% 당첨 리워드 획득
+                      </p>
+                      <h3 id="prizeMainName" class="text-xl font-black text-gemini-navy tracking-tight">
+                        오리지널 빼빼로 (1개)
+                      </h3>
+                    </div>
+                  </div>
+
+                  <!-- 하단 즉시 수령 안내 힌트 -->
+                  <div class="w-full py-2 px-3 rounded-xl bg-gemini-navy/95 text-white text-[11px] font-bold">
+                    하단 <span class="text-gemini-star font-black">[경품 수령 방법 확인하기]</span> 버튼을 눌러주세요!
+                  </div>
+                </div>
+
+                <!-- [앞면 레이어] HTML5 Canvas 스크래치 은박/오로라 덮개 -->
+                <canvas id="scratchCanvas" class="absolute inset-0 w-full h-full z-10 transition-opacity duration-500"></canvas>
+
               </div>
 
-              <!-- 레퍼런스의 "예온'S PICK" 스타일 하단 리본 배너 -->
-              <div class="-mt-4 relative z-10 flex justify-center">
-                <div class="px-6 py-1.5 rounded-full bg-gemini-aurora text-white text-xs font-black tracking-wider shadow-md border-2 border-white flex items-center gap-2">
+              <!-- 레퍼런스의 리본 배너 ("GEMINI'S PICK · 100% WIN") -->
+              <div class="-mt-4 relative z-20 flex justify-center pointer-events-none">
+                <div id="ribbonBannerText" class="px-6 py-1.5 rounded-full bg-gemini-aurora text-white text-xs font-black tracking-wider shadow-md border-2 border-white flex items-center gap-2">
                   <span>★</span>
-                  <span>GEMINI'S PICK · 100% WIN</span>
+                  <span>손가락이나 마우스로 카드를 문질러 주세요</span>
                   <span>★</span>
                 </div>
               </div>
             </div>
 
-            <!-- 도감 카드 하단 설명 텍스트 & 별점 스탯 바 (레퍼런스 하단 디자인) -->
+            <!-- 도감 카드 하단 설명 & 스크래치 진행률 / 스탯 바 -->
             <div class="space-y-3 pt-1 text-center">
-              <p class="text-xs font-medium text-white/85 leading-relaxed px-2">
-                누구나 접속 즉시 긁을 수 있는 행운의 제미또 티켓이다.<br />
-                티켓을 모두 긁으면 숨겨진 경품 도감 등급을 확인할 수 있다.
+              <p id="scratchGuideDesc" class="text-xs font-medium text-white/90 leading-relaxed px-1">
+                복권을 45% 이상 긁으면 당첨 경품과 함께<br />
+                <strong class="text-gemini-star font-extrabold">Google AI Plan 12개월 무료 가입 수령 안내창</strong>이 열립니다!
               </p>
 
               <!-- 하단 스탯 별점 바 -->
               <div class="grid grid-cols-2 gap-2 pt-2 border-t border-white/15 text-xs">
                 <div class="bg-gemini-navyLight rounded-xl py-2 px-3 flex items-center justify-between">
                   <span class="font-bold text-white/80 text-[11px]">당첨확률</span>
-                  <span class="text-gemini-star font-black tracking-tighter text-xs">★★★★★</span>
+                  <span class="text-gemini-star font-black tracking-tighter text-xs">★★★★★ (100%)</span>
                 </div>
                 <div class="bg-gemini-navyLight rounded-xl py-2 px-3 flex items-center justify-between">
-                  <span class="font-bold text-white/80 text-[11px]">최대혜택</span>
-                  <span class="text-gemini-star font-black tracking-tighter text-xs">★★★★★</span>
+                  <span class="font-bold text-white/80 text-[11px]">긁기진행도</span>
+                  <span id="scratchPercentText" class="text-gemini-star font-black text-xs">0%</span>
                 </div>
               </div>
             </div>
@@ -242,112 +316,753 @@
         </div>
       </section>
 
-      <!-- 4. 경품 도감 라인업 영역 (1등 SSR / 2등 SR / 3등 R 카드 슬롯) -->
-      <section aria-label="경품 도감 라인업" class="space-y-3.5">
+      <!-- 4. [복권 긁은 후 즉시 눈에 들어오는] 경품 수령 3단계 가이드 섹션 -->
+      <section id="claimGuideSection" aria-label="경품 수령 조건 및 인증 순서" class="bg-white rounded-3xl p-5 border-2 border-gemini-navy shadow-game-card space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+          <div>
+            <span class="px-2.5 py-0.5 rounded bg-gemini-aurora text-white text-[10px] font-black uppercase tracking-wider">
+              HOW TO CLAIM REWARD
+            </span>
+            <h2 class="text-base font-black text-gemini-navy tracking-tight mt-1">
+              당첨 경품 100% 수령하는 방법 (3분 컷)
+            </h2>
+          </div>
+          <span class="text-[11px] font-extrabold text-gemini-violet bg-gemini-bg px-2.5 py-1 rounded-full">
+            신규 가입 인증
+          </span>
+        </div>
+
+        <!-- 순서 1: 복권 긁기 완료 여부 -->
+        <div class="p-3.5 rounded-2xl bg-gemini-bg border border-gemini-blue/20 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 text-xs font-black text-gemini-navy">
+              <span class="px-2 py-0.5 rounded bg-gemini-navy text-white text-[10px]">STEP 1</span>
+              제미또 스크래치 복권 긁기
+            </span>
+            <span id="step1StatusBadge" class="text-[11px] font-bold text-gemini-slate">진행 대기중</span>
+          </div>
+          <p class="text-[11px] text-gemini-slate leading-relaxed">
+            위 스크래치 카드를 긁어 내가 받을 당첨 경품(1등 배민 10만 원 / 2등 빼빼로 / 3등 츄파춥스) 화면을 먼저 확인하고 캡처해 주세요.
+          </p>
+        </div>
+
+        <!-- 순서 2: Google AI Plan 12개월 무료 가입 (UTM 링크 직결) -->
+        <div class="p-3.5 rounded-2xl bg-gemini-aurora-soft border-2 border-gemini-blue/40 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 text-xs font-black text-gemini-navy">
+              <span class="px-2 py-0.5 rounded bg-gemini-blue text-white text-[10px]">STEP 2</span>
+              Google AI Plan 12개월 무료 가입
+            </span>
+            <span class="text-[10px] font-extrabold text-gemini-blue bg-white px-2 py-0.5 rounded-full border border-gemini-blue/30">
+              필수 수령 조건
+            </span>
+          </div>
+          <p class="text-[11px] text-gemini-navy/85 leading-relaxed font-medium">
+            아래 전용 링크를 통해 <strong>Google AI Plan (대학생 12개월 무료 혜택)</strong>에 가입한 후, <strong>[구독 활성화 완료 화면]</strong>(멤버십 시작일 11/11 확인)을 캡처해 주세요.
+          </p>
+          <a
+            href="https://gemini.google/students/?utm_source=student&utm_medium=social&utm_campaign=microsite_campus_kyunghee-ambassador"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full py-3 px-4 rounded-xl bg-gemini-blue hover:bg-blue-600 text-white font-black text-xs text-center flex items-center justify-center gap-1.5 shadow-game-sm transition active:translate-y-0.5"
+          >
+            <span>Google AI Plan 12개월 무료 가입하러 가기</span>
+            <span>▸</span>
+          </a>
+        </div>
+
+        <!-- 순서 3: 가입 후 Gemini 첫 체험 (1초 프롬프트 복붙) -->
+        <div class="p-3.5 rounded-2xl bg-gemini-bg border border-gemini-violet/30 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 text-xs font-black text-gemini-navy">
+              <span class="px-2 py-0.5 rounded bg-gemini-violet text-white text-[10px]">STEP 3</span>
+              가입 후 Gemini 1초 프롬프트 입력
+            </span>
+            <span class="text-[10px] font-bold text-gemini-violet">행운 키워드 출력</span>
+          </div>
+          <p class="text-[11px] text-gemini-slate leading-relaxed">
+            아래 <strong>[1초 프롬프트 복사]</strong> 버튼을 눌러 Gemini에 그대로 붙여넣고, 출력된 <strong>[행운의 키워드 답변 화면]</strong>을 캡처해 주세요.
+          </p>
+          <div class="bg-white rounded-xl p-2.5 border border-gemini-navy/15 flex items-center justify-between gap-2">
+            <p id="promptTextContent" class="text-[11px] font-bold text-gemini-navy truncate select-all">
+              안녕 제미나이! 11/11 제미또 복권 당첨 기념 오늘의 행운 키워드 1개를 알려줘!
+            </p>
+            <button
+              type="button"
+              onclick="copyPromptText()"
+              class="px-3 py-1.5 rounded-lg bg-gemini-navy text-white text-[11px] font-extrabold flex-shrink-0 hover:bg-gemini-navyLight active:scale-95 transition"
+            >
+              복사하기
+            </button>
+          </div>
+        </div>
+
+        <!-- 순서 4: 인스타그램 @please_gemini DM으로 캡처본 제출 -->
+        <div class="p-3.5 rounded-2xl bg-gemini-aurora-soft border-2 border-gemini-pink/40 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1.5 text-xs font-black text-gemini-navy">
+              <span class="px-2 py-0.5 rounded bg-gemini-pink text-white text-[10px]">STEP 4</span>
+              인스타 @please_gemini DM 인증 제출
+            </span>
+            <span class="text-[10px] font-extrabold text-gemini-pink bg-white px-2 py-0.5 rounded-full border border-gemini-pink/30">
+              기프티콘 발송
+            </span>
+          </div>
+          <div class="bg-white/90 rounded-xl p-2.5 text-[11px] text-gemini-navy space-y-1 border border-gemini-pink/20">
+            <p class="font-extrabold text-gemini-pink">DM으로 보낼 캡처본 2장 체크리스트</p>
+            <p class="font-medium">1. Google AI Plan <strong>구독 활성화 화면 캡처본</strong> (시작일 11/11)</p>
+            <p class="font-medium">2. Gemini <strong>행운의 키워드 결과 화면 + 복권 당첨 캡처본</strong></p>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onclick="copyInstaId()"
+              class="py-3 px-3 rounded-xl bg-white border-2 border-gemini-navy text-gemini-navy font-black text-xs text-center shadow-sm active:scale-95 transition"
+            >
+              @please_gemini 복사
+            </button>
+            <a
+              href="https://www.instagram.com/please_gemini/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="py-3 px-3 rounded-xl bg-gemini-aurora text-white font-black text-xs text-center flex items-center justify-center gap-1 shadow-game-sm active:translate-y-0.5 transition"
+            >
+              <span>인스타 DM 보내기</span>
+              <span>▸</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 운영 및 검수 세부사항 -->
+        <div class="pt-2 border-t border-gray-200 text-[11px] text-gemini-slate space-y-1 leading-relaxed">
+          <p class="font-extrabold text-gemini-navy">운영 및 검수 안내</p>
+          <p>· 운영시간: 11/11 (월) 10:00 ~ 22:00 (DM 제출 시 자동 안내 메시지 발송)</p>
+          <p>· 검수 및 지급: 멤버십 시작일 11/11이 확인된 신규 가입자 대상 기프티콘 발송</p>
+          <p>· 선착순 200명 마감 후에는 사이트 및 이벤트가 조기 마감됩니다.</p>
+        </div>
+      </section>
+
+      <!-- 5. 경품 도감 라인업 영역 (1등 SSR / 2등 SR / 3등 R) -->
+      <section aria-label="경품 도감 라인업" class="space-y-3">
         <div class="flex items-center justify-between px-1">
           <div class="flex items-center gap-2">
             <span class="px-2 py-0.5 rounded bg-gemini-navy text-white text-[10px] font-black uppercase">
               REWARD DEX
             </span>
             <h2 class="text-base font-black text-gemini-navy tracking-tight">
-              제미또 행운의 경품 도감 (총 200명)
+              제미또 경품 도감 라인업 (총 200명)
             </h2>
           </div>
+          <span class="text-[11px] font-bold text-gemini-violet">100% 당첨</span>
         </div>
 
-        <!-- [ASSET 04] 1등 SSR 도감 카드 (배달의민족 10만원권) -->
+        <!-- [Custom Asset 04] 1등 SSR 배달의민족 10만원권 -->
         <div class="bg-white rounded-3xl p-3.5 border-2 border-gemini-navy shadow-game-sm flex items-center gap-3.5">
-          <div class="w-24 h-24 rounded-2xl bg-gray-200 flex-shrink-0 flex flex-col items-center justify-center text-center p-2 border border-gray-300">
-            <span class="text-[10px] font-extrabold text-gray-600">Custom Asset 04</span>
-            <span class="text-[10px] text-gray-500 mt-0.5">1등 상품 (1:1)</span>
+          <div class="w-20 h-20 rounded-2xl bg-gray-200 flex-shrink-0 flex flex-col items-center justify-center text-center p-1.5 border border-gray-300 relative overflow-hidden">
+            <img src="./assets/prize-1-baemin.png" alt="1등 배민 10만원권" class="w-full h-full object-cover rounded-xl" />
           </div>
-          <div class="flex-1 min-w-0 space-y-1">
+          <div class="flex-1 min-w-0 space-y-0.5">
             <div class="flex items-center gap-1.5">
               <span class="px-2 py-0.5 rounded bg-gemini-aurora text-white text-[10px] font-black italic">SSR · 1등</span>
-              <span class="text-[11px] font-extrabold text-gemini-pink">1명 (0.5%)</span>
+              <span class="text-[11px] font-extrabold text-gemini-pink">바이럴 잭팟</span>
             </div>
             <h3 class="text-sm font-black text-gemini-navy truncate">배달의민족 100,000원권</h3>
-            <p class="text-[11px] text-gemini-slate font-medium">바이럴 잭팟 · 10만 원 상품권</p>
+            <p class="text-[11px] text-gemini-slate font-medium">행운의 주인공에게 드리는 10만 원권</p>
             <div class="text-[11px] font-black text-gemini-star tracking-tight">희귀도 ★★★★★</div>
           </div>
         </div>
 
-        <!-- [ASSET 05 & 06] 2등 SR & 3등 R 도감 카드 (2열 그리드) -->
+        <!-- [Custom Asset 05 & 06] 2등 SR 빼빼로 & 3등 R 츄파춥스 -->
         <div class="grid grid-cols-2 gap-3">
-          <!-- 2등 SR 빼빼로 -->
-          <div class="bg-white rounded-3xl p-3.5 border-2 border-gemini-navy shadow-game-sm space-y-2.5">
-            <div class="aspect-square w-full rounded-2xl bg-gray-200 flex flex-col items-center justify-center text-center p-2 border border-gray-300">
-              <span class="text-[11px] font-extrabold text-gray-600">Custom Asset 05</span>
-              <span class="text-[10px] text-gray-500 mt-0.5">2등 빼빼로 (1:1)</span>
+          <div class="bg-white rounded-3xl p-3.5 border-2 border-gemini-navy shadow-game-sm space-y-2">
+            <div class="aspect-square w-full rounded-2xl bg-gray-200 flex items-center justify-center p-1.5 border border-gray-300 overflow-hidden">
+              <img src="./assets/prize-2-pepero.png" alt="2등 오리지널 빼빼로" class="w-full h-full object-cover rounded-xl" />
             </div>
-            <div class="space-y-1">
+            <div class="space-y-0.5">
               <div class="flex items-center justify-between">
                 <span class="px-2 py-0.5 rounded bg-gemini-blue text-white text-[10px] font-black italic">SR · 2등</span>
                 <span class="text-[11px] font-extrabold text-gemini-blue">82명</span>
               </div>
-              <h3 class="text-xs font-black text-gemini-navy">오리지널 빼빼로</h3>
+              <h3 class="text-xs font-black text-gemini-navy pt-0.5">오리지널 빼빼로</h3>
               <p class="text-[10px] text-gemini-slate font-medium">11/11 시즌 메인 리워드</p>
             </div>
           </div>
 
-          <!-- 3등 R 츄파춥스 -->
-          <div class="bg-white rounded-3xl p-3.5 border-2 border-gemini-navy shadow-game-sm space-y-2.5">
-            <div class="aspect-square w-full rounded-2xl bg-gray-200 flex flex-col items-center justify-center text-center p-2 border border-gray-300">
-              <span class="text-[11px] font-extrabold text-gray-600">Custom Asset 06</span>
-              <span class="text-[10px] text-gray-500 mt-0.5">3등 츄파춥스 (1:1)</span>
+          <div class="bg-white rounded-3xl p-3.5 border-2 border-gemini-navy shadow-game-sm space-y-2">
+            <div class="aspect-square w-full rounded-2xl bg-gray-200 flex items-center justify-center p-1.5 border border-gray-300 overflow-hidden">
+              <img src="./assets/prize-3-chupachups.png" alt="3등 츄파춥스 사탕" class="w-full h-full object-cover rounded-xl" />
             </div>
-            <div class="space-y-1">
+            <div class="space-y-0.5">
               <div class="flex items-center justify-between">
                 <span class="px-2 py-0.5 rounded bg-gemini-violet text-white text-[10px] font-black italic">R · 3등</span>
-                <span class="text-[11px] font-extrabold text-gemini-violet">117명</span>
+                <span class="text-[11px] font-extrabold text-gemini-violet">116명</span>
               </div>
-              <h3 class="text-xs font-black text-gemini-navy">츄파춥스 사탕</h3>
+              <h3 class="text-xs font-black text-gemini-navy pt-0.5">츄파춥스 사탕</h3>
               <p class="text-[10px] text-gemini-slate font-medium">참여자 전원 기본 리워드</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 5. 퀘스트 방식 참여 안내 (QUEST GUIDE) -->
-      <section aria-label="퀘스트 참여 순서" class="bg-white rounded-3xl p-4 border-2 border-gemini-navy shadow-game-sm space-y-3">
+      <!-- 운영진용 순번 테스트 바 (25번째 / 92번째 1등 당첨 및 2·3등 즉시 시뮬레이션) -->
+      <section aria-label="운영진 순번 시뮬레이터" class="bg-gemini-navy/90 rounded-2xl p-3.5 text-white space-y-2 border border-white/15">
         <div class="flex items-center justify-between">
-          <span class="px-2.5 py-0.5 rounded-full bg-gemini-navy text-white text-[10px] font-black tracking-wider uppercase">
-            QUEST MISSION
+          <span class="text-[10px] font-black text-gemini-star uppercase tracking-wider">
+            ADMIN TEST · 순번별 당첨 시뮬레이터
           </span>
-          <span class="text-[11px] font-bold text-gemini-violet">11/11 10:00 ~ 22:00 운영</span>
+          <span id="currentSimTurnLabel" class="text-[10px] font-bold text-white/75">
+            현재 설정: 25번째 참가자 (1등)
+          </span>
         </div>
-        <div class="space-y-2 text-xs">
-          <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gemini-bg">
-            <span class="px-2 py-0.5 rounded bg-gemini-blue text-white text-[10px] font-black">LV.1</span>
-            <span class="font-bold text-gemini-navy">복권 즉시 긁기 (누구나 100% 당첨)</span>
-          </div>
-          <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gemini-bg">
-            <span class="px-2 py-0.5 rounded bg-gemini-violet text-white text-[10px] font-black">LV.2</span>
-            <span class="font-bold text-gemini-navy">Google AI Plan 12개월 무료 가입 인증</span>
-          </div>
-          <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gemini-bg">
-            <span class="px-2 py-0.5 rounded bg-gemini-pink text-white text-[10px] font-black">LV.3</span>
-            <span class="font-bold text-gemini-navy">Gemini 1초 프롬프트 캡처 + 인스타 DM 제출</span>
-          </div>
+        <p class="text-[10px] text-white/70 leading-relaxed">
+          요청하신 대로 <strong>25번째, 92번째 참가자에게 1등(배민 10만원권)</strong>이 배정되어 있습니다. 아래 버튼으로 각 순번을 눌러 복권 긁기를 바로 테스트해 보세요.
+        </p>
+        <div class="grid grid-cols-4 gap-1.5 pt-1">
+          <button type="button" onclick="setParticipantTurn(25)" class="py-1.5 px-2 rounded-lg bg-gemini-aurora text-white text-[10px] font-black hover:opacity-90 active:scale-95 transition">
+            #25 (1등)
+          </button>
+          <button type="button" onclick="setParticipantTurn(92)" class="py-1.5 px-2 rounded-lg bg-gemini-aurora text-white text-[10px] font-black hover:opacity-90 active:scale-95 transition">
+            #92 (1등)
+          </button>
+          <button type="button" onclick="setParticipantTurn(12)" class="py-1.5 px-2 rounded-lg bg-gemini-blue text-white text-[10px] font-black hover:opacity-90 active:scale-95 transition">
+            #12 (2등)
+          </button>
+          <button type="button" onclick="setParticipantTurn(1)" class="py-1.5 px-2 rounded-lg bg-gemini-violet text-white text-[10px] font-black hover:opacity-90 active:scale-95 transition">
+            #01 (3등)
+          </button>
         </div>
       </section>
 
     </div>
 
-    <!-- 6. 하단 고정 아케이드/게임 스타일 CTA 버튼 (초기 비활성화 상태) -->
+    <!-- 6. 하단 고정 CTA 버튼 (긁기 전 비활성화 -> 긁은 후 활성화 & 안내 모달 오픈) -->
     <div class="fixed bottom-0 left-0 right-0 z-30 pointer-events-none">
-      <div class="max-w-[480px] mx-auto px-5 pt-6 pb-5 bg-gradient-to-t from-[#E4E8FA] via-[#E4E8FA]/95 to-transparent pointer-events-auto">
+      <div class="max-w-[480px] mx-auto px-5 pt-6 pb-5 bg-gradient-to-t from-[#DCE2F9] via-[#DCE2F9]/95 to-transparent pointer-events-auto">
         <button
+          id="mainCtaBtn"
           type="button"
           disabled
+          onclick="openClaimModal()"
           class="w-full py-4 px-6 rounded-2xl bg-gray-200 text-gray-400 font-black text-base tracking-tight border-2 border-gray-300 shadow-game-btn-disabled cursor-not-allowed transition-all duration-200"
         >
-          경품 수령 조건 확인하기
+          먼저 복권을 긁어 당첨을 확인하세요
         </button>
       </div>
     </div>
 
   </main>
+
+  <!-- 7. 당첨 축하 & 경품 수령 조건 안내 팝업 모달 (복권 긁기 완료 시 자동 팝업) -->
+  <div
+    id="claimModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-6 bg-gemini-navy/80 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalPrizeTitle"
+  >
+    <div class="w-full max-w-[430px] max-h-[90vh] overflow-y-auto bg-white rounded-3xl border-3 border-gemini-navy shadow-game-card p-5 space-y-4 animate-pop">
+
+      <!-- 모달 상단 당첨 결과 헤더 -->
+      <div class="flex items-start justify-between gap-2 border-b border-gray-100 pb-3">
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span id="modalRarityBadge" class="px-2.5 py-0.5 rounded-full bg-gemini-aurora text-white text-[10px] font-black italic">
+              SSR · 1등 당첨
+            </span>
+            <span id="modalTicketNo" class="text-[11px] font-extrabold text-gemini-violet">
+              접수번호 #025
+            </span>
+          </div>
+          <h3 id="modalPrizeTitle" class="text-lg font-black text-gemini-navy tracking-tight mt-1">
+            배달의민족 100,000원권 당첨!
+          </h3>
+          <p class="text-xs font-bold text-gemini-pink mt-0.5">
+            Google AI Plan 12개월 무료 가입 인증 시 100% 지급!
+          </p>
+        </div>
+        <button
+          type="button"
+          onclick="closeClaimModal()"
+          class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gemini-navy font-black text-sm flex items-center justify-center flex-shrink-0"
+          aria-label="닫기"
+        >
+          ×
+        </button>
+      </div>
+
+      <!-- 모달 내부 핵심 3단계 액션 -->
+      <div class="space-y-3 text-xs">
+
+        <!-- STEP 1: Google AI Plan 가입 링크 -->
+        <div class="p-3.5 rounded-2xl bg-gemini-aurora-soft border-2 border-gemini-blue/50 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-gemini-navy flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded bg-gemini-blue text-white text-[10px]">1단계</span>
+              Google AI Plan 12개월 무료 가입
+            </span>
+            <span class="text-[10px] font-extrabold text-gemini-blue">필수 인증</span>
+          </div>
+          <p class="text-[11px] text-gemini-navy/85 leading-relaxed">
+            아래 버튼으로 접속해 <strong>Google AI Plan (12개월 무료)</strong>에 가입하고 <strong>[구독 활성화 완료 화면]</strong>을 캡처해 주세요.
+          </p>
+          <a
+            href="https://gemini.google/students/?utm_source=student&utm_medium=social&utm_campaign=microsite_campus_kyunghee-ambassador"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full py-3 px-4 rounded-xl bg-gemini-blue hover:bg-blue-600 text-white font-black text-xs text-center flex items-center justify-center gap-1.5 shadow-game-sm transition"
+          >
+            <span>Google AI Plan 무료 가입 링크 열기</span>
+            <span>▸</span>
+          </a>
+        </div>
+
+        <!-- STEP 2: 1초 프롬프트 복붙 -->
+        <div class="p-3.5 rounded-2xl bg-gemini-bg border border-gemini-violet/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-gemini-navy flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded bg-gemini-violet text-white text-[10px]">2단계</span>
+              Gemini 1초 프롬프트 복붙 & 캡처
+            </span>
+          </div>
+          <p class="text-[11px] text-gemini-slate leading-relaxed">
+            가입 후 Gemini에 아래 문장을 붙여넣고 출력된 <strong>[행운의 키워드 화면]</strong>을 캡처해 주세요.
+          </p>
+          <div class="bg-white rounded-xl p-2 border border-gemini-navy/15 flex items-center justify-between gap-2">
+            <span class="text-[11px] font-bold text-gemini-navy truncate">
+              안녕 제미나이! 11/11 제미또 복권 당첨 기념 오늘의 행운 키워드 1개를 알려줘!
+            </span>
+            <button
+              type="button"
+              onclick="copyPromptText()"
+              class="px-2.5 py-1.5 rounded-lg bg-gemini-navy text-white text-[10px] font-extrabold flex-shrink-0"
+            >
+              복사
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: 인스타 @please_gemini DM 전송 -->
+        <div class="p-3.5 rounded-2xl bg-gemini-aurora-soft border-2 border-gemini-pink/50 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-gemini-navy flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded bg-gemini-pink text-white text-[10px]">3단계</span>
+              인스타 @please_gemini 로 DM 제출
+            </span>
+          </div>
+          <p class="text-[11px] text-gemini-navy/85 leading-relaxed">
+            <strong>① 구독 활성화 캡처본 + ② 행운의 키워드 캡처본</strong>을 인스타그램 <strong>@please_gemini</strong> DM으로 보내주시면 검수 후 기프티콘을 발송해 드립니다!
+          </p>
+          <div class="grid grid-cols-2 gap-2 pt-0.5">
+            <button
+              type="button"
+              onclick="copyInstaId()"
+              class="py-2.5 px-3 rounded-xl bg-white border-2 border-gemini-navy text-gemini-navy font-black text-xs"
+            >
+              @please_gemini 복사
+            </button>
+            <a
+              href="https://www.instagram.com/please_gemini/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="py-2.5 px-3 rounded-xl bg-gemini-aurora text-white font-black text-xs text-center flex items-center justify-center gap-1 shadow-game-sm"
+            >
+              <span>인스타 DM 바로가기</span>
+              <span>▸</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 모달 하단 닫기 버튼 -->
+      <button
+        type="button"
+        onclick="closeClaimModal()"
+        class="w-full py-3 rounded-xl bg-gemini-navy text-white font-bold text-xs tracking-tight"
+      >
+        화면 돌아가기 (아래에서도 수령 방법 확인 가능)
+      </button>
+    </div>
+  </div>
+
+  <!-- 복사 완료 토스트 알림 -->
+  <div
+    id="toastBanner"
+    class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2.5 rounded-full bg-gemini-navy text-white text-xs font-extrabold shadow-lg border border-white/20"
+  >
+    클립보드에 복사되었습니다!
+  </div>
+
+  <!-- 스크래치 복권 & 순번별 당첨 배정 JavaScript 로직 -->
+  <script>
+    /**
+     * [순번별 경품 배정 로직]
+     * - 총 200명 (1번 ~ 200번)
+     * - 1등 (배달의민족 100,000원권): 25번째, 92번째 참가자 고정 배정
+     * - 2등 (오리지널 빼빼로): 82명 배정 (골고루 분포된 고정 시드 배열)
+     * - 3등 (츄파춥스 사탕): 나머지 116명 전원 배정
+     */
+    const TOTAL_STOCK = 200;
+    const FIRST_PRIZE_TURNS = new Set([25, 92]);
+
+    // 2등(82명)을 1~200번 사이에 고르게 배치 (25, 92 제외)
+    const SECOND_PRIZE_TURNS = new Set();
+    (function buildSecondPrizeTurns() {
+      let seed = 1111;
+      const candidates = [];
+      for (let i = 1; i <= TOTAL_STOCK; i++) {
+        if (!FIRST_PRIZE_TURNS.has(i)) candidates.push(i);
+      }
+      // 결정론적 셔플(Deterministic Shuffle)로 82명 선정
+      for (let i = candidates.length - 1; i > 0; i--) {
+        seed = (seed * 16807) % 2147483647;
+        const j = seed % (i + 1);
+        const temp = candidates[i];
+        candidates[i] = candidates[j];
+        candidates[j] = temp;
+      }
+      for (let k = 0; k < 82; k++) {
+        SECOND_PRIZE_TURNS.add(candidates[k]);
+      }
+    })();
+
+    const PRIZE_DATA = {
+      1: {
+        tier: 'SSR · 1등 당첨',
+        rarity: 'SSR 등급',
+        name: '배달의민족 100,000원권',
+        sub: '바이럴 잭팟! 오늘의 1등 주인공 탄생',
+        img: './assets/prize-1-baemin.png'
+      },
+      2: {
+        tier: 'SR · 2등 당첨',
+        rarity: 'SR 등급',
+        name: '롯데 오리지널 빼빼로',
+        sub: '11/11 달콤한 시즌 메인 리워드 당첨!',
+        img: './assets/prize-2-pepero.png'
+      },
+      3: {
+        tier: 'R · 3등 당첨',
+        rarity: 'R 등급',
+        name: '츄파춥스 사탕 기프티콘',
+        sub: '꽝 없는 100% 당첨 기본 리워드 획득!',
+        img: './assets/prize-3-chupachups.png'
+      }
+    };
+
+    function getPrizeRankByTurn(turnNumber) {
+      if (FIRST_PRIZE_TURNS.has(turnNumber)) return 1;
+      if (SECOND_PRIZE_TURNS.has(turnNumber)) return 2;
+      return 3;
+    }
+
+    // URL 파라미터(?turn=25)가 있으면 우선 적용, 없으면 로컬 카운터 또는 기본 시연 순번 적용
+    function getInitialTurn() {
+      const params = new URLSearchParams(window.location.search);
+      const urlTurn = parseInt(params.get('turn'), 10);
+      if (!isNaN(urlTurn) && urlTurn >= 1 && urlTurn <= TOTAL_STOCK) {
+        return urlTurn;
+      }
+      let storedTurn = parseInt(localStorage.getItem('gemitto_participant_turn'), 10);
+      if (isNaN(storedTurn) || storedTurn < 1 || storedTurn > TOTAL_STOCK) {
+        storedTurn = 1;
+        localStorage.setItem('gemitto_participant_turn', String(storedTurn));
+      }
+      return storedTurn;
+    }
+
+    let currentTurn = getInitialTurn();
+    let isRevealed = false;
+    let isDrawing = false;
+
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function formatTurnNo(n) {
+      return String(n).padStart(3, '0');
+    }
+
+    // 현재 순번에 맞춰 상품 UI 및 상단 수량 업데이트
+    function applyTurnState(turnNumber) {
+      currentTurn = turnNumber;
+      const rank = getPrizeRankByTurn(turnNumber);
+      const prize = PRIZE_DATA[rank];
+
+      // 남은 수량 표시 (긁기 전에는 200 - turn + 1, 긁은 후에는 200 - turn)
+      const remainBefore = Math.max(0, TOTAL_STOCK - turnNumber + 1);
+      document.getElementById('remainCountText').textContent = remainBefore + '개';
+      document.getElementById('turnBadgeText').textContent = 'NO.' + formatTurnNo(turnNumber);
+      document.getElementById('remainGaugeBar').style.width = Math.max(5, (remainBefore / TOTAL_STOCK) * 100) + '%';
+
+      // 뒷면 당첨 카드 정보 세팅
+      document.getElementById('prizeTierPill').textContent = prize.tier;
+      document.getElementById('prizeTicketNumber').textContent = '접수번호 #' + formatTurnNo(turnNumber);
+      document.getElementById('prizeSubCopy').textContent = prize.sub;
+      document.getElementById('prizeMainName').textContent = prize.name;
+      const imgEl = document.getElementById('prizeImageEl');
+      imgEl.style.display = 'block';
+      imgEl.src = prize.img;
+
+      // 모달 정보 세팅
+      document.getElementById('modalRarityBadge').textContent = prize.tier;
+      document.getElementById('modalTicketNo').textContent = '접수번호 #' + formatTurnNo(turnNumber);
+      document.getElementById('modalPrizeTitle').textContent = prize.name + ' 당첨!';
+
+      // 하단 시뮬레이터 상태 라벨
+      document.getElementById('currentSimTurnLabel').textContent =
+        '현재: #' + formatTurnNo(turnNumber) + ' (' + rank + '등 배정)';
+    }
+
+    // 스크래치 덮개 캔버스 초기화 (제미나이 오로라 메탈릭 홀로그램 커버 렌더링)
+    function initScratchCanvas() {
+      isRevealed = false;
+      canvas.style.opacity = '1';
+      canvas.style.pointerEvents = 'auto';
+
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const size = Math.round(rect.width || 360);
+      canvas.width = size;
+      canvas.height = size;
+
+      ctx.globalCompositeOperation = 'source-over';
+
+      // 1) 오로라 홀로그램 그라데이션 배경
+      const grad = ctx.createLinearGradient(0, 0, size, size);
+      grad.addColorStop(0, '#4285F4');
+      grad.addColorStop(0.5, '#9B72CB');
+      grad.addColorStop(1, '#D96570');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+
+      // 2) 은박 메탈릭 사선 패턴 오버레이
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.lineWidth = 2;
+      for (let i = -size; i < size * 2; i += 14) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i + size, size);
+        ctx.stroke();
+      }
+
+      // 3) 내부 도감 점선 테두리
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 6]);
+      ctx.strokeRect(16, 16, size - 32, size - 32);
+      ctx.setLineDash([]);
+
+      // 4) 중앙 제미나이 4각 스파클 심볼
+      const cx = size / 2;
+      const cy = size / 2 - 28;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 28);
+      ctx.quadraticCurveTo(cx, cy, cx + 28, cy);
+      ctx.quadraticCurveTo(cx, cy, cx, cy + 28);
+      ctx.quadraticCurveTo(cx, cy, cx - 28, cy);
+      ctx.quadraticCurveTo(cx, cy, cx, cy - 28);
+      ctx.fill();
+
+      // 5) 중앙 안내 타이포그래피
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 22px Pretendard, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SCRATCH HERE', cx, cy + 56);
+
+      ctx.font = '700 13px Pretendard, sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+      ctx.fillText('여기를 문질러 당첨 경품을 확인하세요!', cx, cy + 80);
+
+      // UI 초기 상태 복원
+      document.getElementById('scratchPercentText').textContent = '0%';
+      document.getElementById('cardRarityBadge').textContent = '??? 등급';
+      document.getElementById('cardStatusSub').textContent = 'SCRATCH NOW · 100% WIN';
+      document.getElementById('cardStatusTitle').textContent = '지금 바로 복권을 긁어보세요!';
+      document.getElementById('ribbonBannerText').innerHTML =
+        '<span>★</span><span>손가락이나 마우스로 카드를 문질러 주세요</span><span>★</span>';
+      document.getElementById('step1StatusBadge').textContent = '진행 대기중';
+      document.getElementById('step1StatusBadge').className = 'text-[11px] font-bold text-gemini-slate';
+
+      // 하단 CTA 버튼 초기 비활성화
+      const ctaBtn = document.getElementById('mainCtaBtn');
+      ctaBtn.disabled = true;
+      ctaBtn.textContent = '먼저 복권을 긁어 당첨을 확인하세요';
+      ctaBtn.className =
+        'w-full py-4 px-6 rounded-2xl bg-gray-200 text-gray-400 font-black text-base tracking-tight border-2 border-gray-300 shadow-game-btn-disabled cursor-not-allowed transition-all duration-200';
+    }
+
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: ((clientX - rect.left) / rect.width) * canvas.width,
+        y: ((clientY - rect.top) / rect.height) * canvas.height
+      };
+    }
+
+    function scratchAt(x, y) {
+      if (isRevealed) return;
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x, y, 28, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function checkScratchProgress() {
+      if (isRevealed) return;
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let transparentPixels = 0;
+      const totalSampled = imgData.length / (4 * 16);
+
+      for (let i = 3; i < imgData.length; i += 4 * 16) {
+        if (imgData[i] < 128) transparentPixels++;
+      }
+
+      const percent = Math.min(100, Math.round((transparentPixels / totalSampled) * 100));
+      document.getElementById('scratchPercentText').textContent = percent + '%';
+
+      if (percent >= 42) {
+        completeScratchReveal();
+      }
+    }
+
+    function completeScratchReveal() {
+      if (isRevealed) return;
+      isRevealed = true;
+
+      // 덮개 완전히 투명화
+      canvas.style.opacity = '0';
+      canvas.style.pointerEvents = 'none';
+      document.getElementById('scratchPercentText').textContent = '100% (완료)';
+
+      const rank = getPrizeRankByTurn(currentTurn);
+      const prize = PRIZE_DATA[rank];
+
+      // 상단 실시간 남은 수량 1 차감 연출
+      const remainAfter = Math.max(0, TOTAL_STOCK - currentTurn);
+      document.getElementById('remainCountText').textContent = remainAfter + '개';
+      document.getElementById('remainGaugeBar').style.width = Math.max(5, (remainAfter / TOTAL_STOCK) * 100) + '%';
+
+      // 카드 헤더 및 리본 업데이트
+      document.getElementById('cardRarityBadge').textContent = prize.rarity;
+      document.getElementById('cardStatusSub').textContent = 'CONGRATULATIONS · 당첨 완료';
+      document.getElementById('cardStatusTitle').textContent = prize.name + ' 당첨!';
+      document.getElementById('ribbonBannerText').innerHTML =
+        '<span>★</span><span>당첨 완료! 아래 수령 조건을 확인하세요</span><span>★</span>';
+
+      // STEP 1 완료 뱃지 업데이트
+      const step1Badge = document.getElementById('step1StatusBadge');
+      step1Badge.textContent = '✓ 당첨 확인 완료';
+      step1Badge.className = 'text-[11px] font-extrabold text-gemini-mint';
+
+      // 하단 고정 CTA 버튼 활성화
+      const ctaBtn = document.getElementById('mainCtaBtn');
+      ctaBtn.disabled = false;
+      ctaBtn.textContent = '경품 수령 조건 확인하기 (Google AI 무료 가입)';
+      ctaBtn.className =
+        'w-full py-4 px-6 rounded-2xl bg-gemini-aurora text-white font-black text-base tracking-tight border-2 border-gemini-navy shadow-game-btn btn-pulse-active cursor-pointer transition-all duration-200';
+
+      // 다음 방문 시 순번 증가 저장
+      const nextTurn = currentTurn < TOTAL_STOCK ? currentTurn + 1 : 1;
+      localStorage.setItem('gemitto_participant_turn', String(nextTurn));
+
+      // 0.65초 후 수령 안내 모달 자동 오픈
+      setTimeout(() => {
+        openClaimModal();
+      }, 650);
+    }
+
+    // 마우스 및 터치 이벤트 바인딩
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      const pos = getPointerPos(e);
+      scratchAt(pos.x, pos.y);
+    });
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      const pos = getPointerPos(e);
+      scratchAt(pos.x, pos.y);
+      checkScratchProgress();
+    });
+    window.addEventListener('mouseup', () => {
+      if (isDrawing) {
+        isDrawing = false;
+        checkScratchProgress();
+      }
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      isDrawing = true;
+      const pos = getPointerPos(e);
+      scratchAt(pos.x, pos.y);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (!isDrawing) return;
+      const pos = getPointerPos(e);
+      scratchAt(pos.x, pos.y);
+      checkScratchProgress();
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', () => {
+      if (isDrawing) {
+        isDrawing = false;
+        checkScratchProgress();
+      }
+    });
+
+    // 운영진 시뮬레이터 버튼 동작
+    function setParticipantTurn(turnNumber) {
+      applyTurnState(turnNumber);
+      initScratchCanvas();
+      document.getElementById('scratchSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 모달 제어
+    function openClaimModal() {
+      const modal = document.getElementById('claimModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeClaimModal() {
+      const modal = document.getElementById('claimModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // 복사 유틸리티
+    function showToast(msg) {
+      const toast = document.getElementById('toastBanner');
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2200);
+    }
+
+    function copyPromptText() {
+      const text = '안녕 제미나이! 11/11 제미또 복권 당첨 기념 오늘의 행운 키워드 1개를 알려줘!';
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('1초 프롬프트가 복사되었습니다! Gemini에 붙여넣어 주세요.');
+      });
+    }
+
+    function copyInstaId() {
+      navigator.clipboard.writeText('@please_gemini').then(() => {
+        showToast('@please_gemini 아이디가 복사되었습니다!');
+      });
+    }
+
+    // 초기 실행 (기본 시연용으로 25번째 1등 또는 순번 적용)
+    window.addEventListener('DOMContentLoaded', () => {
+      applyTurnState(currentTurn);
+      initScratchCanvas();
+    });
+  </script>
 
 </body>
 </html>
