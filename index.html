@@ -98,7 +98,6 @@
       animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* 타이틀 텍스트가 배경에 절대 묻히지 않도록 깔끔한 화이트 스티커 테두리 효과 */
     .title-sticker-shadow {
       text-shadow:
         -2px -2px 0 #FFFFFF,
@@ -158,23 +157,15 @@
     <!-- 메인 컨텐츠 래퍼 -->
     <div class="px-5 -mt-6 relative z-20 space-y-6 flex-1">
 
-      <!-- 로그인 완료 상태 바 (이름 + 학교 계정 표시) -->
+      <!-- 로그인 완료 상태 바 (이름 + 학교 계정 입력 후 표시) -->
       <div id="loggedInStatusBar" class="hidden items-center justify-between px-4 py-2.5 rounded-2xl bg-white/95 border border-pinky-soft shadow-sm">
         <div class="flex items-center gap-2 min-w-0">
           <span class="w-5 h-5 rounded-full bg-pinky-deep text-white text-[11px] font-black flex items-center justify-center flex-shrink-0">
             ✓
           </span>
-          <p id="loggedInUserText" class="text-xs font-extrabold text-choco truncate">
-            김경희 (student@khu.ac.kr)
-          </p>
+          <p id="loggedInUserText" class="text-xs font-extrabold text-choco truncate"></p>
         </div>
-        <button
-          type="button"
-          onclick="logoutSchoolAccount()"
-          class="px-2.5 py-1 rounded-lg bg-cream text-choco-muted hover:text-choco text-[11px] font-bold border border-choco/10 flex-shrink-0"
-        >
-          정보 변경
-        </button>
+        <span class="text-[11px] font-bold text-pinky-deep flex-shrink-0">1계정 1회 참여</span>
       </div>
 
       <!-- 3. 메인 스크래치 도감 카드 영역 -->
@@ -208,10 +199,10 @@
                 <div id="prizeRevealCard" class="absolute inset-0 flex flex-col items-center justify-between p-4 text-center bg-white">
                   <div class="w-full flex items-center justify-between">
                     <span id="prizeTierPill" class="px-3 py-1 rounded-full bg-pinky-deep text-white text-xs font-black tracking-tight shadow-sm">
-                      SR · 2등 당첨
+                      R · 3등 당첨
                     </span>
                     <span id="prizeTicketNumber" class="px-2.5 py-1 rounded-full bg-cream-warm text-choco text-[11px] font-extrabold border border-choco/10">
-                      #012
+                      #001
                     </span>
                   </div>
 
@@ -219,18 +210,15 @@
                     <div class="w-40 h-40 rounded-2xl bg-white flex items-center justify-center p-2 overflow-hidden">
                       <img
                         id="prizeImageEl"
-                        src="./assets/giftishow-pepero.png"
+                        src="./assets/giftishow-chupachups.png"
                         alt="당첨 상품 이미지"
                         class="w-full h-full object-contain"
                       />
                     </div>
                     <h3 id="prizeMainName" class="text-xl font-black text-choco tracking-tight">
-                      롯데 오리지널 초코 빼빼로
+                      츄파춥스 막대사탕 기프티콘
                     </h3>
-                    <!-- DM 대조용 참가자 이름 & 학교 계정 표시 -->
-                    <p id="prizeUserWatermark" class="text-[11px] font-bold text-choco-muted">
-                      김경희 · student@khu.ac.kr
-                    </p>
+                    <p id="prizeUserWatermark" class="text-[11px] font-bold text-choco-muted"></p>
                   </div>
 
                   <button
@@ -245,7 +233,7 @@
                 <!-- [앞면 레이어 1] HTML5 Canvas 스크래치 덮개 -->
                 <canvas id="scratchCanvas" class="absolute inset-0 w-full h-full z-10 transition-opacity duration-500"></canvas>
 
-                <!-- [앞면 레이어 2] 이름 + 학교 계정 로그인 잠금 오버레이 -->
+                <!-- [앞면 레이어 2] 처음에 무조건 뜨는 이름 + 학교 계정 입력 잠금 화면 -->
                 <div
                   id="schoolLoginGateOverlay"
                   class="absolute inset-0 z-20 bg-choco-deep/80 backdrop-blur-[5px] flex flex-col items-center justify-center p-4 text-center transition-opacity duration-300"
@@ -263,7 +251,7 @@
                         학교 계정으로 복권 열기
                       </h3>
                       <p class="text-[11px] text-choco-muted leading-snug">
-                        경품 지급 확인을 위해 <strong>이름</strong>과 <strong>학교 이메일(<span class="text-pinky-deep">@khu.ac.kr</span> 등 .ac.kr / .edu)</strong>을 입력해 주세요.
+                        <strong>이름</strong>과 <strong>학교 이메일(<span class="text-pinky-deep">@khu.ac.kr</span> 등 .ac.kr / .edu)</strong>을 입력하면 복권을 긁을 수 있습니다. (1계정 1회)
                       </p>
                     </div>
 
@@ -472,18 +460,18 @@
         </p>
       </section>
 
-      <!-- 운영진용 순번 테스트 & 구글 시트 연동 확인 패널 -->
-      <section aria-label="운영진 순번 테스트 및 구글시트 연동" class="bg-choco rounded-2xl p-4 text-cream space-y-3 shadow-sm">
+      <!-- 6. 하단: 운영진 테스트 화면 + 운영진 코드(2026gsakhu) 입력 시에만 열리는 비밀 기록창 -->
+      <section aria-label="운영진 테스트" class="bg-choco rounded-2xl p-4 text-cream space-y-3 shadow-sm">
         <div class="flex items-center justify-between">
-          <span class="text-[10px] font-extrabold text-pinky-soft uppercase">
-            운영진 테스트 & 구글 시트 실시간 기록
+          <span class="text-[11px] font-extrabold text-pinky-soft uppercase">
+            운영진 테스트 화면
           </span>
           <span id="currentSimTurnLabel" class="text-[11px] font-bold text-star">
-            현재: #012 (2등 빼빼로)
+            현재: #001 (3등 츄파춥스 막대사탕 기프티콘)
           </span>
         </div>
 
-        <!-- 순번 테스트 버튼 -->
+        <!-- 순번 테스트 버튼 (누르면 해당 순번으로 세팅되고 이름/학교계정 입력창부터 다시 시작) -->
         <div class="grid grid-cols-4 gap-1.5">
           <button type="button" onclick="quickTestTurn(25)" class="py-2 px-2 rounded-xl bg-pinky-deep text-white text-[11px] font-extrabold active:scale-95 transition">
             #25 (1등 배민)
@@ -499,35 +487,51 @@
           </button>
         </div>
 
-        <!-- 구글 시트 웹앱 URL 설정 & 최근 당첨 기록 미니 로그 -->
+        <!-- 운영진 코드(2026gsakhu) 입력 전 잠금 영역 -->
         <div class="pt-2 border-t border-white/15 space-y-2 text-[11px]">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-cream/90">구글 시트 연동 상태</span>
-            <span id="sheetSyncStatusText" class="text-[10px] font-extrabold text-star">
-              ✓ 실시간 구글 시트 연동됨
-            </span>
-          </div>
-          <div class="flex items-center justify-between gap-2">
-            <a
-              href="https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-full py-2 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-cream font-extrabold text-xs text-center flex items-center justify-center gap-1.5 transition"
-            >
-              <span>실시간 당첨자 구글 시트 열기</span>
-              <span>▸</span>
-            </a>
-          </div>
-          <div class="hidden">
+          <div id="adminCodeLockBox" class="flex gap-1.5">
             <input
-              id="sheetWebAppUrlInput"
-              type="url"
-              value="https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec"
+              id="adminCodeInput"
+              type="password"
+              placeholder="운영진 코드 입력 (당첨 기록 열람)"
+              class="flex-1 px-3 py-1.5 rounded-lg bg-choco-deep text-cream text-[11px] border border-white/20 placeholder:text-cream/40 focus:outline-none select-text"
+              onkeydown="if(event.key==='Enter'){unlockAdminRecords();}"
             />
+            <button
+              type="button"
+              onclick="unlockAdminRecords()"
+              class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-cream text-[11px] font-extrabold flex-shrink-0"
+            >
+              확인
+            </button>
           </div>
-          <!-- 브라우저 내 최근 참여/당첨 로그 미리보기 -->
-          <div id="localRecordPreview" class="bg-choco-deep/70 rounded-xl p-2.5 text-[10px] text-cream/85 space-y-1 max-h-28 overflow-y-auto">
-            <p class="text-cream/50">복권을 긁으면 여기에 [순번 / 이름 / 학교계정 / 당첨상품]이 실시간으로 표시되고 구글 시트로 자동 전송됩니다.</p>
+
+          <!-- 운영진 코드(2026gsakhu) 일치 시에만 열리는 당첨 기록 & 시트 관리창 -->
+          <div id="adminSecretRecordsPanel" class="hidden space-y-2 pt-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-star text-[11px]">✓ 운영진 전용 당첨 기록</span>
+              <div class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onclick="resetAllEventData()"
+                  class="px-2 py-1 rounded bg-red-500/80 hover:bg-red-500 text-white text-[10px] font-extrabold"
+                >
+                  수량 200개 & 기록 리셋
+                </button>
+                <a
+                  href="https://docs.google.com/spreadsheets/d/1Rt8oDx_serZkIq_CFPkkKGW7UPCFRyYah_80Tfaj7LE/edit?gid=0#gid=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="px-2.5 py-1 rounded bg-pinky-deep text-white text-[10px] font-extrabold"
+                >
+                  구글 시트 열기 ▸
+                </a>
+              </div>
+            </div>
+
+            <div id="localRecordPreview" class="bg-choco-deep/70 rounded-xl p-2.5 text-[10px] text-cream/85 space-y-1 max-h-36 overflow-y-auto">
+              <p class="text-cream/50">아직 기록된 당첨 내역이 없습니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -549,25 +553,23 @@
         <div class="flex items-center gap-3">
           <img
             id="modalPrizeThumb"
-            src="./assets/giftishow-pepero.png"
+            src="./assets/giftishow-chupachups.png"
             alt="당첨 경품 썸네일"
             class="w-16 h-16 rounded-2xl object-contain border border-gray-100 p-1 bg-white flex-shrink-0"
           />
           <div>
             <div class="flex items-center gap-1.5">
               <span id="modalRarityBadge" class="px-2.5 py-0.5 rounded-full bg-pinky-deep text-white text-[10px] font-extrabold">
-                SR · 2등 당첨
+                R · 3등 당첨
               </span>
               <span id="modalTicketNo" class="text-[11px] font-extrabold text-choco-muted">
-                #012
+                #001
               </span>
             </div>
             <h3 id="modalPrizeTitle" class="text-base font-black text-choco tracking-tight mt-1">
-              롯데 오리지널 초코 빼빼로 당첨!
+              츄파춥스 막대사탕 기프티콘 당첨!
             </h3>
-            <p id="modalUserInfoBadge" class="text-[11px] font-bold text-pinky-deep mt-0.5">
-              김경희 (student@khu.ac.kr)
-            </p>
+            <p id="modalUserInfoBadge" class="text-[11px] font-bold text-pinky-deep mt-0.5"></p>
           </div>
         </div>
         <button
@@ -645,25 +647,20 @@
   <!-- 복사 알림 토스트 -->
   <div
     id="toastBanner"
-    class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2.5 rounded-full bg-choco text-white text-xs font-extrabold shadow-floating"
+    class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2.5 rounded-full bg-choco text-white text-xs font-extrabold shadow-floating text-center max-w-[90vw]"
   >
     복사되었습니다!
   </div>
 
   <script>
-    /**
-     * [구글 시트 실시간 연동 설정]
-     * google-apps-script.js 파일의 안내에 따라 배포한 Google Apps Script 웹 앱 URL을
-     * 아래 DEFAULT_GOOGLE_SHEET_WEB_APP_URL에 넣거나, 화면 하단 입력칸에 붙여넣으시면
-     * 학생이 복권을 긁는 즉시 구글 시트에 [순번 / 일시 / 이름 / 학교계정 / 당첨등수 / 당첨상품명]이 자동 기록됩니다!
-     */
-    const DEFAULT_GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec';
-
+    const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxntDMogmC96EnDHehhmYs2lnQAuU4ePC4TELXR0jT3RjjHX5cXjHBNGRrl7TdGgEn8/exec';
+    const ADMIN_SECRET_CODE = '2026gsakhu';
     const TOTAL_STOCK = 200;
+
     // 1등(배달의민족 10만원권): 25번째, 92번째 참가자 고정
     const FIRST_PRIZE_TURNS = new Set([25, 92]);
 
-    // 2등(오리지널 초코 빼빼로 82명): 2, 4, 6, 8, 10, 12 ... 짝수 순번 82명에 명확히 고정 배정
+    // 2등(오리지널 초코 빼빼로 82명): 2 ~ 166 짝수 순번 고정 (92 제외)
     const SECOND_PRIZE_TURNS = new Set();
     (function buildSecondPrizeTurns() {
       for (let num = 2; num <= 166; num += 2) {
@@ -700,24 +697,25 @@
       return 3;
     }
 
+    // 수량 200개(#001번)부터 새로 시작하도록 v4 스토리지 키 사용
     function getInitialTurn() {
       const params = new URLSearchParams(window.location.search);
       const urlTurn = parseInt(params.get('turn'), 10);
       if (!isNaN(urlTurn) && urlTurn >= 1 && urlTurn <= TOTAL_STOCK) {
         return urlTurn;
       }
-      let storedTurn = parseInt(localStorage.getItem('gemitto_turn_v3'), 10);
+      let storedTurn = parseInt(localStorage.getItem('gemitto_turn_v4'), 10);
       if (isNaN(storedTurn) || storedTurn < 1 || storedTurn > TOTAL_STOCK) {
-        storedTurn = 12;
-        localStorage.setItem('gemitto_turn_v3', String(storedTurn));
+        storedTurn = 1; // 1번(남은 수량 200개)으로 리셋 시작!
+        localStorage.setItem('gemitto_turn_v4', String(storedTurn));
       }
       return storedTurn;
     }
 
     let currentTurn = getInitialTurn();
-    let loggedInUserName = localStorage.getItem('gemitto_user_name') || '';
-    let loggedInSchoolEmail = localStorage.getItem('gemitto_school_email') || '';
-    let sheetWebAppUrl = DEFAULT_GOOGLE_SHEET_WEB_APP_URL;
+    // 페이지 진입 시 무조건 이름+학교계정을 먼저 입력하도록 초기 로그인 세션은 비워둠
+    let loggedInUserName = '';
+    let loggedInSchoolEmail = '';
     let isRevealed = false;
     let isDrawing = false;
 
@@ -740,6 +738,22 @@
       return Boolean(loggedInUserName.trim()) && isValidSchoolEmail(loggedInSchoolEmail);
     }
 
+    // 1계정 1회 참여 기록 조회/저장
+    function getParticipatedMap() {
+      try {
+        return JSON.parse(localStorage.getItem('gemitto_participated_v4') || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveParticipatedAccount(email, record) {
+      const map = getParticipatedMap();
+      map[email.toLowerCase()] = record;
+      localStorage.setItem('gemitto_participated_v4', JSON.stringify(map));
+    }
+
+    // 이름 + 학교 계정 입력 후 [입력 완료하고 복권 긁기] 클릭 시
     function handleSchoolLogin(e) {
       e.preventDefault();
       const nameEl = document.getElementById('userNameInput');
@@ -750,23 +764,27 @@
       const email = emailEl.value.trim().toLowerCase();
 
       if (!name || !isValidSchoolEmail(email)) {
+        errEl.textContent = '이름과 학교 계정(.ac.kr 또는 .edu)을 정확히 입력해 주세요.';
         errEl.classList.remove('hidden');
         if (!name) nameEl.focus();
         else emailEl.focus();
         return;
       }
 
-      errEl.classList.add('hidden');
-      setLoggedInUser(name, email);
-      showToast(name + '님 인증 완료! 복권을 문질러 긁어보세요.');
-    }
+      // 1계정 1회 참여 제한 체크: 이미 복권을 긁은 학교 계정이면 재참여 차단!
+      const participatedMap = getParticipatedMap();
+      if (participatedMap[email]) {
+        errEl.textContent = '이미 참여한 학교 계정입니다! (1계정 1회 참여 제한)';
+        errEl.classList.remove('hidden');
+        showToast('이미 참여한 학교 계정입니다. (1인 1회 참여 제한)');
+        return;
+      }
 
-    function setLoggedInUser(name, email) {
+      errEl.classList.add('hidden');
       loggedInUserName = name;
       loggedInSchoolEmail = email;
-      localStorage.setItem('gemitto_user_name', name);
-      localStorage.setItem('gemitto_school_email', email);
 
+      // 잠금 오버레이 해제 -> 이제 스크래치를 긁을 수 있음!
       document.getElementById('schoolLoginGateOverlay').classList.add('hidden');
 
       const statusBar = document.getElementById('loggedInStatusBar');
@@ -776,62 +794,67 @@
 
       document.getElementById('prizeUserWatermark').textContent = name + ' · ' + email;
       document.getElementById('modalUserInfoBadge').textContent = name + ' (' + email + ')';
+
+      showToast(name + '님 인증 완료! 지금 카드를 문질러 복권을 긁어보세요.');
     }
 
-    function logoutSchoolAccount() {
-      loggedInUserName = '';
-      loggedInSchoolEmail = '';
-      localStorage.removeItem('gemitto_user_name');
-      localStorage.removeItem('gemitto_school_email');
-
-      document.getElementById('schoolLoginGateOverlay').classList.remove('hidden');
-
-      const statusBar = document.getElementById('loggedInStatusBar');
-      statusBar.classList.add('hidden');
-      statusBar.classList.remove('flex');
-
-      document.getElementById('userNameInput').value = '';
-      document.getElementById('schoolEmailInput').value = '';
-      initScratchCanvas();
+    // 운영진 코드(2026gsakhu) 확인 후 당첨 기록 패널 열기
+    function unlockAdminRecords() {
+      const codeInput = document.getElementById('adminCodeInput');
+      if (codeInput.value.trim() === ADMIN_SECRET_CODE) {
+        document.getElementById('adminSecretRecordsPanel').classList.remove('hidden');
+        document.getElementById('adminCodeLockBox').classList.add('hidden');
+        renderLocalRecordPreview();
+        showToast('운영진 전용 기록창이 열렸습니다.');
+      } else {
+        showToast('운영진 코드가 올바르지 않습니다.');
+        codeInput.value = '';
+        codeInput.focus();
+      }
     }
 
-    function saveSheetWebAppUrl() {
-      const input = document.getElementById('sheetWebAppUrlInput');
-      sheetWebAppUrl = input.value.trim();
-      localStorage.setItem('gemitto_sheet_url', sheetWebAppUrl);
-      document.getElementById('sheetSyncStatusText').textContent =
-        sheetWebAppUrl ? '연동 URL 저장 완료!' : 'URL 미설정 (로컬 기록 모드)';
-      showToast('구글 시트 웹 앱 URL이 저장되었습니다!');
+    // 수량 200개 및 로컬 참여 기록 전체 리셋 (운영진 전용)
+    function resetAllEventData() {
+      localStorage.removeItem('gemitto_turn_v4');
+      localStorage.removeItem('gemitto_logs_v4');
+      localStorage.removeItem('gemitto_participated_v4');
+      currentTurn = 1;
+      localStorage.setItem('gemitto_turn_v4', '1');
+      resetToLoginGate(1);
+      renderLocalRecordPreview();
+      showToast('남은 수량이 200개로 리셋되었고 모든 로컬 참여 기록이 초기화되었습니다!');
     }
 
-    // 복권을 긁어 당첨이 확정되는 순간 구글 시트로 [이름, 학교계정, 순번, 당첨상품] 전송
-    async function sendResultToGoogleSheet(turnNumber, name, schoolEmail, rank, prizeName) {
-      const statusEl = document.getElementById('sheetSyncStatusText');
+    // 스크래치를 다 긁었을 때만 로컬 기록 + 구글 시트 전송 + 해당 계정 참여 완료 처리
+    async function recordAndSyncResult(turnNumber, name, schoolEmail, rank, prizeName) {
       const nowStr = new Date().toLocaleTimeString('ko-KR', { hour12: false });
 
-      // 1) 화면 하단 로컬 로그에 즉시 추가
-      const logs = JSON.parse(localStorage.getItem('gemitto_local_logs') || '[]');
-      const newEntry = {
+      // 1) 해당 학교 계정을 참여 완료로 저장 (재참여 차단)
+      saveParticipatedAccount(schoolEmail, {
+        turn: turnNumber,
+        name: name,
+        email: schoolEmail,
+        rank: rank,
+        prize: prizeName,
+        time: nowStr
+      });
+
+      // 2) 운영진 기록창 로그에 추가
+      const logs = JSON.parse(localStorage.getItem('gemitto_logs_v4') || '[]');
+      logs.unshift({
         turn: '#' + formatTurnNo(turnNumber),
         time: nowStr,
         name: name,
         email: schoolEmail,
         rank: rank + '등',
         prize: prizeName
-      };
-      logs.unshift(newEntry);
-      localStorage.setItem('gemitto_local_logs', JSON.stringify(logs.slice(0, 20)));
+      });
+      localStorage.setItem('gemitto_logs_v4', JSON.stringify(logs.slice(0, 200)));
       renderLocalRecordPreview();
 
-      // 2) Google Apps Script 웹 앱 URL이 설정되어 있으면 구글 시트로 즉시 POST 전송
-      if (!sheetWebAppUrl) {
-        statusEl.textContent = '로컬 기록 완료 (구글 시트 URL 입력 시 시트 자동 전송)';
-        return;
-      }
-
-      statusEl.textContent = '구글 시트로 기록 전송 중...';
+      // 3) 구글 시트로 실시간 전송
       try {
-        await fetch(sheetWebAppUrl, {
+        await fetch(GOOGLE_SHEET_WEB_APP_URL, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -840,20 +863,35 @@
             turnNumber: turnNumber,
             name: name,
             schoolEmail: schoolEmail,
-            prizeRank: rank + '등',
+            prizeRank: rank + '등 (' + PRIZE_DATA[rank].rarity + ')',
             prizeName: prizeName
           })
         });
-        statusEl.textContent = '✓ 구글 시트 기록 완료 (' + name + ' / ' + prizeName + ')';
       } catch (err) {
-        statusEl.textContent = '시트 전송 실패 (네트워크 확인)';
+        // 네트워크 오류 무시
+      }
+    }
+
+    // 페이지 로드 시 구글 시트 헤더 자동 생성 확인 및 남은 수량 동기화
+    async function syncWithGoogleSheetOnLoad() {
+      try {
+        const res = await fetch(GOOGLE_SHEET_WEB_APP_URL, { method: 'GET' });
+        const data = await res.json();
+        if (data && data.status === 'ok' && typeof data.remaining === 'number') {
+          document.getElementById('remainCountText').textContent = data.remaining + '개';
+        }
+      } catch (e) {
+        // 오프라인/로컬 폴백 유지
       }
     }
 
     function renderLocalRecordPreview() {
       const container = document.getElementById('localRecordPreview');
-      const logs = JSON.parse(localStorage.getItem('gemitto_local_logs') || '[]');
-      if (logs.length === 0) return;
+      const logs = JSON.parse(localStorage.getItem('gemitto_logs_v4') || '[]');
+      if (logs.length === 0) {
+        container.innerHTML = '<p class="text-cream/50">아직 기록된 당첨 내역이 없습니다.</p>';
+        return;
+      }
 
       container.innerHTML = logs
         .map(
@@ -914,22 +952,31 @@
       }
     }
 
-    function initScratchCanvas() {
+    // 이름+학교계정 입력 게이트부터 다시 시작하도록 초기화
+    function resetToLoginGate(turnNumber) {
+      loggedInUserName = '';
+      loggedInSchoolEmail = '';
       isRevealed = false;
+      isDrawing = false;
+
+      document.getElementById('userNameInput').value = '';
+      document.getElementById('schoolEmailInput').value = '';
+      document.getElementById('loginErrorMsg').classList.add('hidden');
+      document.getElementById('schoolLoginGateOverlay').classList.remove('hidden');
+
+      const statusBar = document.getElementById('loggedInStatusBar');
+      statusBar.classList.add('hidden');
+      statusBar.classList.remove('flex');
+
       canvas.style.opacity = '1';
       canvas.style.pointerEvents = 'auto';
-
       drawCoverLayer();
 
       document.getElementById('cardStatusTitle').textContent = '100% 당첨 스크래치 복권';
       document.getElementById('ribbonBannerText').innerHTML =
         '<span>★</span><span>GEMITTO\'S PICK</span><span>★</span>';
 
-      if (isUserAuthenticated()) {
-        setLoggedInUser(loggedInUserName, loggedInSchoolEmail);
-      } else {
-        document.getElementById('schoolLoginGateOverlay').classList.remove('hidden');
-      }
+      applyTurnState(turnNumber);
     }
 
     coverImg.onload = () => {
@@ -988,8 +1035,8 @@
       document.getElementById('ribbonBannerText').innerHTML =
         '<span>★</span><span>' + prize.tier + '</span><span>★</span>';
 
-      // 구글 시트 및 로컬 로그로 [참여순번, 이름, 학교계정, 당첨등수, 당첨상품명] 실시간 전송!
-      sendResultToGoogleSheet(
+      // 스크래치를 다 긁었을 때 기록 & 구글 시트 전송 & 계정 참여 완료 처리
+      recordAndSyncResult(
         currentTurn,
         loggedInUserName,
         loggedInSchoolEmail,
@@ -998,7 +1045,7 @@
       );
 
       const nextTurn = currentTurn < TOTAL_STOCK ? currentTurn + 1 : 1;
-      localStorage.setItem('gemitto_turn_v3', String(nextTurn));
+      localStorage.setItem('gemitto_turn_v4', String(nextTurn));
 
       setTimeout(() => {
         openClaimModal();
@@ -1048,12 +1095,9 @@
       }
     });
 
+    // 운영진 테스트 버튼 클릭 시: 해당 순번으로 바꾸고 이름/학교계정 입력창부터 테스트 가능하게 리셋
     function quickTestTurn(turnNumber) {
-      if (!isUserAuthenticated()) {
-        setLoggedInUser('김경희', 'gemitto@khu.ac.kr');
-      }
-      applyTurnState(turnNumber);
-      initScratchCanvas();
+      resetToLoginGate(turnNumber);
       document.getElementById('scratchSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
@@ -1092,10 +1136,8 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('sheetWebAppUrlInput').value = sheetWebAppUrl;
-      renderLocalRecordPreview();
-      applyTurnState(currentTurn);
-      initScratchCanvas();
+      resetToLoginGate(currentTurn);
+      syncWithGoogleSheetOnLoad();
     });
   </script>
 
