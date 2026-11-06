@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>GEMITTO (제미또) - 11/11 100% 당첨 스크래치 복권</title>
+  <!-- Pretendard Web Font CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            cream: {
+              DEFAULT: '#FFF9F5',
+              subtle: '#FAFAFA',
+              warm: '#F7EFEA',
+            },
+            brand: {
+              pink: '#FF1493',
+              pinkLight: '#FFF0F7',
+              pinkSoft: '#FFD6EB',
+            },
+            choco: {
+              DEFAULT: '#3A2321',
+              light: '#6E5653',
+              dark: '#261715',
+            }
+          },
+          boxShadow: {
+            'soft-lg': '0 14px 36px -6px rgba(74, 44, 42, 0.07), 0 4px 12px -2px rgba(74, 44, 42, 0.04)',
+            'soft-xl': '0 24px 48px -12px rgba(74, 44, 42, 0.10), 0 8px 20px -4px rgba(255, 20, 147, 0.05)',
+            'floating': '0 8px 24px -4px rgba(58, 35, 33, 0.09), 0 2px 6px -1px rgba(58, 35, 33, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background-color: #F2ECE7;
+      color: #3A2321;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-brand-pink selection:text-white">
+
+  <!-- 모바일 뷰포트 최적화 컨테이너 (max-width: 480px, margin: 0 auto, min-height: 100vh) -->
+  <main class="max-w-[480px] mx-auto min-h-screen bg-cream relative flex flex-col justify-between pb-32 shadow-2xl overflow-x-hidden">
+
+    <!-- 1. 상단 플로팅 뱃지 (Sticky) -->
+    <div class="sticky top-4 z-30 px-5 pt-3 pointer-events-none flex justify-center">
+      <div class="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/90 backdrop-blur-md shadow-floating border border-white/80">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-pink"></span>
+        </span>
+        <span class="text-xs font-extrabold tracking-wider text-brand-pink uppercase">LIVE</span>
+        <span class="h-3 w-[1px] bg-choco/15"></span>
+        <p class="text-xs font-semibold text-choco tracking-tight">
+          실시간 남은 수량: <strong class="font-extrabold text-brand-pink">200개</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- 상단 & 메인 컨텐츠 래퍼 -->
+    <div class="px-5 pt-5 space-y-6 flex-1">
+
+      <!-- 2. 헤더 타이틀 영역 -->
+      <section aria-label="프로모션 헤더 영역" class="space-y-4">
+        <!-- 브랜드 로고 & 타이틀 카피 -->
+        <div class="text-center space-y-2 pt-1 flex flex-col items-center">
+          <img
+            src="./assets/logo-gemitto.svg"
+            alt="GEMITTO 11.11 로고"
+            class="h-9 w-auto select-none"
+          />
+          <span class="inline-block px-3 py-1 rounded-full bg-brand-pinkLight text-brand-pink text-[11px] font-bold tracking-tight">
+            11.11 PEPERO DAY × GEMINI EVENT
+          </span>
+          <h1 class="text-[22px] font-extrabold text-choco tracking-tight leading-snug pt-0.5">
+            긁기만 해도 100% 당첨!<br />
+            <span class="text-brand-pink">꽝 없는 제미또</span> 스크래치 복권
+          </h1>
+          <p class="text-xs font-medium text-choco-light tracking-tight">
+            접속 즉시 누구나 긁기 가능 · 선착순 200명 한정 리워드
+          </p>
+        </div>
+
+        <!-- 프로모션 메인 타이틀 이미지 (4:3 비율) -->
+        <div class="p-2 bg-white rounded-3xl shadow-soft-lg border border-choco/5">
+          <div class="bg-cream-warm rounded-2xl aspect-[4/3] w-full relative overflow-hidden">
+            <img
+              src="./assets/hero-banner.png"
+              alt="GEMITTO 11/11 프로모션 메인 배너"
+              class="w-full h-full object-cover select-none"
+            />
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between px-3.5 py-2 rounded-xl bg-choco/80 backdrop-blur-sm text-white text-[11px] font-medium">
+              <span>운영시간 · 11/11 (월) 10:00 ~ 22:00</span>
+              <span class="font-bold text-brand-pinkSoft">선착순 200명</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 메인 스크래치 카드 영역 -->
+      <section aria-label="메인 스크래치 카드 영역">
+        <div class="bg-white rounded-3xl p-5 shadow-soft-xl border border-choco/5 space-y-4">
+          <!-- 카드 상단 안내 헤더 -->
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-choco text-white text-[11px] font-bold tracking-tight">
+                STEP 01
+              </span>
+              <h2 class="text-sm font-bold text-choco tracking-tight">
+                복권 긁고 당첨 경품 확인하기
+              </h2>
+            </div>
+            <span class="text-[11px] font-bold text-brand-pink bg-brand-pinkLight px-2.5 py-1 rounded-full">
+              100% 당첨 보장
+            </span>
+          </div>
+
+          <!-- 1:1 비율 스크래치 덮개 이미지 영역 -->
+          <div class="relative rounded-2xl overflow-hidden p-1.5 bg-cream-warm border border-dashed border-brand-pink/35">
+            <div class="relative rounded-xl aspect-square w-full overflow-hidden select-none shadow-inner">
+              <img
+                src="./assets/scratch-cover.png"
+                alt="스크래치 복권 덮개 영역"
+                class="w-full h-full object-cover"
+              />
+              <!-- 스크래치 유도 하단 플로팅 캡션 -->
+              <div class="absolute bottom-3.5 inset-x-4 flex justify-center">
+                <div class="px-3.5 py-1.5 rounded-full bg-choco/85 backdrop-blur-sm text-white text-[11px] font-semibold tracking-tight shadow-sm">
+                  손가락으로 은박 영역을 좌우로 문질러 보세요
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카드 하단 마이크로 카피 -->
+          <div class="flex items-center justify-center gap-2 pt-0.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-pink"></span>
+            <p class="text-xs font-medium text-choco-light text-center tracking-tight">
+              복권을 모두 긁으면 아래 <strong class="text-choco font-bold">경품 수령 조건 확인하기</strong> 버튼이 활성화됩니다
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. 경품 라인업 안내 섹션 (1등 / 2등 / 3등) -->
+      <section aria-label="제미또 경품 라인업" class="space-y-3">
+        <div class="flex items-center justify-between px-1">
+          <div>
+            <span class="text-[11px] font-extrabold text-brand-pink tracking-wider uppercase">PRIZE LINEUP</span>
+            <h2 class="text-base font-extrabold text-choco tracking-tight">
+              꽝 없는 200명 전원 경품 라인업
+            </h2>
+          </div>
+          <span class="text-[11px] font-semibold text-choco-light bg-cream-warm px-2.5 py-1 rounded-full">
+            총 200명 추첨
+          </span>
+        </div>
+
+        <!-- 1등 바이럴 잭팟 하이라이트 카드 -->
+        <div class="bg-white rounded-3xl p-4 shadow-soft-lg border-2 border-brand-pink/25 flex items-center gap-4 relative overflow-hidden">
+          <div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 bg-cream-warm border border-choco/5">
+            <img
+              src="./assets/prize-1-baemin.png"
+              alt="1등 배달의민족 10만원권"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="flex-1 min-w-0 space-y-1">
+            <div class="flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded-full bg-brand-pink text-white text-[10px] font-extrabold tracking-tight">
+                1등 · 바이럴 잭팟
+              </span>
+              <span class="text-[11px] font-bold text-brand-pink">1명</span>
+            </div>
+            <h3 class="text-base font-extrabold text-choco tracking-tight truncate">
+              배달의민족 100,000원권
+            </h3>
+            <p class="text-xs text-choco-light font-medium">
+              오늘의 주인공 1명에게 드리는 10만 원 상품권
+            </p>
+          </div>
+        </div>
+
+        <!-- 2등 & 3등 2열 그리드 카드 -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- 2등 오리지널 빼빼로 -->
+          <div class="bg-white rounded-3xl p-3.5 shadow-soft-lg border border-choco/5 flex flex-col justify-between space-y-3">
+            <div class="aspect-square w-full rounded-2xl overflow-hidden bg-cream-warm border border-choco/5">
+              <img
+                src="./assets/prize-2-pepero.png"
+                alt="2등 오리지널 빼빼로"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="space-y-1 px-0.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-full bg-choco text-white text-[10px] font-bold">
+                  2등 · 시즌 메인
+                </span>
+                <span class="text-[11px] font-extrabold text-brand-pink">82명</span>
+              </div>
+              <h3 class="text-sm font-extrabold text-choco tracking-tight pt-0.5">
+                오리지널 빼빼로
+              </h3>
+              <p class="text-[11px] text-choco-light font-medium">
+                11/11 달콤한 시즌 기프티콘
+              </p>
+            </div>
+          </div>
+
+          <!-- 3등 츄파춥스 사탕 -->
+          <div class="bg-white rounded-3xl p-3.5 shadow-soft-lg border border-choco/5 flex flex-col justify-between space-y-3">
+            <div class="aspect-square w-full rounded-2xl overflow-hidden bg-cream-warm border border-choco/5">
+              <img
+                src="./assets/prize-3-chupachups.png"
+                alt="3등 츄파춥스 사탕"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="space-y-1 px-0.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded-full bg-cream-warm text-choco text-[10px] font-bold border border-choco/10">
+                  3등 · 기본 리워드
+                </span>
+                <span class="text-[11px] font-extrabold text-choco">117명</span>
+              </div>
+              <h3 class="text-sm font-extrabold text-choco tracking-tight pt-0.5">
+                츄파춥스 사탕
+              </h3>
+              <p class="text-[11px] text-choco-light font-medium">
+                참여자 전원 100% 당첨 리워드
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 참여 순서 및 경품 수령 안내 섹션 -->
+      <section aria-label="참여 순서 및 운영 안내" class="bg-white rounded-3xl p-5 shadow-soft-lg border border-choco/5 space-y-4">
+        <div class="space-y-0.5">
+          <span class="text-[11px] font-extrabold text-brand-pink tracking-wider uppercase">HOW TO GET REWARD</span>
+          <h2 class="text-sm font-extrabold text-choco tracking-tight">
+            복권은 누구나 긁기 · 경품 수령은 가입 인증
+          </h2>
+        </div>
+
+        <ol class="space-y-2.5 text-xs">
+          <li class="flex items-start gap-2.5 p-2.5 rounded-2xl bg-cream">
+            <span class="w-5 h-5 rounded-full bg-brand-pink text-white text-[11px] font-extrabold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+            <div>
+              <p class="font-bold text-choco">복권 즉시 긁기 (100% 당첨)</p>
+              <p class="text-[11px] text-choco-light mt-0.5">접속 후 위 스크래치 카드를 긁어 당첨 등수를 확인합니다.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-2.5 p-2.5 rounded-2xl bg-cream">
+            <span class="w-5 h-5 rounded-full bg-choco text-white text-[11px] font-extrabold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+            <div>
+              <p class="font-bold text-choco">Google AI Plan 12개월 무료 가입</p>
+              <p class="text-[11px] text-choco-light mt-0.5">안내 팝업의 전용 링크를 통해 Google AI Plan 무료 체험을 활성화합니다.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-2.5 p-2.5 rounded-2xl bg-cream">
+            <span class="w-5 h-5 rounded-full bg-choco text-white text-[11px] font-extrabold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+            <div>
+              <p class="font-bold text-choco">Gemini 1초 프롬프트 입력 & 인스타그램 DM 인증</p>
+              <p class="text-[11px] text-choco-light mt-0.5">행운의 키워드 결과 캡처본 + 구독 활성화 캡처본을 인스타그램 DM으로 보내면 검수 후 기프티콘이 발송됩니다.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="pt-1 border-t border-choco/10 text-[11px] text-choco-light space-y-1 leading-relaxed">
+          <p>· 멤버십 시작일 11/11이 확인된 신규 가입자 대상으로 기프티콘이 지급됩니다.</p>
+          <p>· 선착순 200명 수량 소진 시 이벤트가 조기 마감됩니다.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- 6. 하단 고정 CTA 버튼 영역 -->
+    <div class="fixed bottom-0 left-0 right-0 z-30 pointer-events-none">
+      <div class="max-w-[480px] mx-auto px-5 pt-6 pb-5 bg-gradient-to-t from-cream via-cream/95 to-transparent pointer-events-auto">
+        <button
+          type="button"
+          disabled
+          class="w-full py-4 px-6 rounded-2xl bg-gray-200 text-gray-400 font-bold text-base tracking-tight shadow-sm cursor-not-allowed transition-all duration-200 border border-gray-300/60"
+        >
+          경품 수령 조건 확인하기
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

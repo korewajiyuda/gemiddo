@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 56" fill="none">
+  <defs>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF1493" />
+      <stop offset="100%" stop-color="#FF5CB8" />
+    </linearGradient>
+    <linearGradient id="chocoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3A2321" />
+      <stop offset="100%" stop-color="#52322F" />
+    </linearGradient>
+  </defs>
+  <!-- Left Gemini 4-point Sparkle Star -->
+  <path d="M24 8C24 17.5 16.5 25 7 25C16.5 25 24 32.5 24 42C24 32.5 31.5 25 41 25C31.5 25 24 17.5 24 8Z" fill="url(#pinkGrad)" />
+  <circle cx="38" cy="12" r="2.5" fill="#3A2321" />
+  <!-- GEMITTO Wordmark -->
+  <text x="52" y="37" font-family="Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="30" font-weight="900" letter-spacing="-0.03em" fill="url(#chocoGrad)">GEMI</text>
+  <text x="131" y="37" font-family="Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="30" font-weight="900" letter-spacing="-0.03em" fill="url(#pinkGrad)">TTO</text>
+  <!-- 11.11 Pill Tag -->
+  <rect x="202" y="15" width="58" height="24" rx="12" fill="#3A2321" />
+  <text x="231" y="31" text-anchor="middle" font-family="Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="800" fill="#FFF9F5" letter-spacing="0.02em">11.11</text>
+  <!-- Right Small Sparkle -->
+  <path d="M268 10C268 14 265 17 261 17C265 17 268 20 268 24C268 20 271 17 275 17C271 17 268 14 268 10Z" fill="#FF1493" />
+</svg>
