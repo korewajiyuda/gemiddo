@@ -14,11 +14,11 @@
  */
 
 const TOTAL_STOCK = 200;
-const FIRST_PRIZE_TURNS = [25, 92]; // 25번째, 92번째 참가자 1등(배민 10만원권) 고정
+const FIRST_PRIZE_TURNS = [25, 92]; // 25번째, 92번째 참가자 1등(배민 5만원권, 총 2명) 고정
 
 function getPrizeByTurn(turn) {
   if (FIRST_PRIZE_TURNS.indexOf(turn) !== -1) {
-    return { rank: '1등 (SSR)', name: '배달의민족 100,000원권' };
+    return { rank: '1등 (SSR)', name: '배달의민족 50,000원권' };
   }
   // 2~166 짝수 순번(92 제외, 총 82명): 2등 오리지널 초코 빼빼로
   if (turn >= 2 && turn <= 166 && turn % 2 === 0) {
